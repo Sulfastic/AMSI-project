@@ -1,0 +1,29 @@
+2d survival based game
+
+gameplay:
+-coop/optional vs (stat based)
+-talent tree (at least 4) with character equipment
+-at least 4 classes: warrior, tank, gunslinger, healer
+-multiplayer (max 4)
+-character leveling
+-coglike currency (talents)
+-active environment
+
+frontend:
+-one screen
+-fresh game start
+-random level generation
+-arcade sprite style
+-gui
+-settings saved od local drive
+-controls (desktop/smartphone)
+-login screen
+-menu
+
+backend:
+-client server 
+-backend server (dao, rest, socket)
+-database
+-client-server communication
+-stat collecting system ?
+-authentication
