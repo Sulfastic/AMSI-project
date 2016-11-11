@@ -2,6 +2,7 @@
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
 # User-specific stuff:
+.idea
 .idea/workspace.xml
 .idea/tasks.xml
 
@@ -39,3 +40,10 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
+
+.DS_Store
+*.db
+build/
+node_modules/
+
+

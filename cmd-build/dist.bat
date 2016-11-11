@@ -1,0 +1,1 @@
+web2exe-win.exe ..\build --package-json ..\build\package.json --main ..\build\index.html --export-to windows-x64
