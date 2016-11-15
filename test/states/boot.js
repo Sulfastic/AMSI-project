@@ -1,4 +1,4 @@
-import engine from '/src/states/phaser-class';
+import engine from '../../src/states/phaser-class';
 import { describe, before, it } from 'mocha';
 import assert from 'assert';
 
