@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Family Business Product Backlog</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 5px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+<table>
+    <caption><strong>User Stories</strong></caption>
+    <tr>
+        <th>US#</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Difficulty points</th>
+        <th>Priority</th>
+    </tr>
+    <tr><td>1</td><td>Frontend</td><td>As a user, from desktop, I want to launch game and access login screen. (LS)</td><td>3</td><td>1</td></tr>
+    <tr><td>2</td><td>Frontend</td><td>As a user, from LS, I want to enter an account creation screen. (ACS)</td><td>2</td><td>1</td></tr>
+    <tr><td>3</td><td>Frontend</td><td>As a user, in ACS, I want to create a new account.</td><td>5</td><td>1</td></tr>
+    <tr><td>4</td><td>Frontend</td><td>As a user, in LS, I want to log in and access game menu. (GM)</td><td>3</td><td>1</td></tr>
+    <tr><td>5</td><td>Frontend</td><td>As a user, in GM, I want to have following buttons/functionalities: Continue</td><td>2</td><td>2</td></tr>
+    <tr><td>6</td><td>Frontend</td><td>As a user, in GM, I want to have following buttons/functionalities: New Game</td><td>2</td><td>1</td></tr>
+    <tr><td>7</td><td>Frontend</td><td>As a user, in GM, I want to have following buttons/functionalities: Load Game</td><td>1</td><td>2</td></tr>
+    <tr><td>8</td><td>Frontend</td><td>As a user, in GM, I want to have following buttons/functionalities: Options</td><td>1</td><td>2</td></tr>
+    <tr><td>9</td><td>Frontend</td><td>As a user, in GM, I want to have following buttons/functionalities: Statistics</td><td>1</td><td>3</td></tr>
+    <tr><td>10</td><td>Frontend</td><td>As a user, in GM, I want to have following buttons/functionalities: Quit/Exit</td><td>1</td><td>1</td></tr>
+    <tr><td>11</td><td>Frontend</td><td>As a user, from GM, I want to click “New Game” button and enter GAMEPLAY with demo character and demo map</td><td>34</td><td>1</td></tr>
+    <tr><td>12</td><td>Frontend</td><td>As a user, from GM, I want to click “New Game” button and enter a character creation screen. (CC)</td><td>5</td><td>2</td></tr>
+    <tr><td>13</td><td>Frontend</td><td>As a user, in CC, I want to create a new character and enter character view screen. (CV)</td><td>21</td><td>2</td></tr>
+    <tr><td>14</td><td>Frontend</td><td>As a user, in CV, I want to review and upgrade my character.</td><td>21</td><td>2</td></tr>
+    <tr><td>15</td><td>Frontend</td><td>As a user, from GM, I want to click “Continue” button to load my last saved game and enter CV screen. (CV)</td><td>5</td><td>2</td></tr>
+    <tr><td>16</td><td>Frontend</td><td>As a user, from GM, I want to click “Load Game” button to enter game loading screen (GL).</td><td>8</td><td>2</td></tr>
+    <tr><td>17</td><td>Frontend</td><td>As a user, in GL, I want to choose any of my previously saved games and load it. (CV)</td><td>8</td><td>2</td></tr>
+    <tr><td>18</td><td>Frontend</td><td>As a user, from GM, I want to access “Options”. (OPT)</td><td>8</td><td>2</td></tr>
+    <tr><td>19</td><td>Frontend</td><td>As a user, in OPT, I want to configure my account and exit with/without saving my changes. (GM)</td><td>13</td><td>2</td></tr>
+    <tr><td>20</td><td>Frontend</td><td>As a user, from CV, I want to enter game with demo map</td><td>8</td><td>2</td></tr>
+    <tr><td>21</td><td>Frontend</td><td>As a user, from CV, I want to enter game with random map generated. (->GAMEPLAY)</td><td>55</td><td>3</td></tr>
+    <tr><td>22</td><td>Frontend</td><td>As a user I want the game map graphics to be Supernatural/Horror style</td><td>13</td><td>1</td></tr>
+    <tr><td>23</td><td>Frontend</td><td>As a user, from CV, I want to exit game. (GM)</td><td>3</td><td>2</td></tr>
+    <tr><td>24</td><td>Frontend</td><td>As a user, from CV, I want to enter the game saving screen. (GS)</td><td>3</td><td>2</td></tr>
+    <tr><td>25</td><td>Frontend</td><td>As a user, in GS, I want to save my progress and return to CV. (CV)</td><td>8</td><td>2</td></tr>
+    <tr><td>26</td><td>Frontend</td><td>As a user, in GAMEPLAY, I want to have hud (head up display) panel with usable skill buttons in it.</td><td>8</td><td>3</td></tr>
+    <tr><td>27</td><td>Frontend</td><td>As a user in GAMEPLAY, I want to have health bars displayed under character and enemies</td><td>5</td><td>1</td></tr>
+    <tr><td>28</td><td>Frontend</td><td>As a user, in GAMEPLAY, I want to have hud panel with character statistics displayed in.</td><td>5</td><td>3</td></tr>
+    <tr><td>29</td><td>Frontend</td><td>As a user, in GAMEPLAY, after attack I want to have damage spikes displayed around target/s (including bigger critical dmg spikes and stat dmg)</td><td>8</td><td>3</td></tr>
+    <tr><td>30</td><td>Backend</td><td>As a user I want to create new account and get authorization link/confirmation in given email.</td><td>13</td><td>1</td></tr>
+    <tr><td>31</td><td>Backend</td><td>As a user I want to log in to game (login/email and password)</td><td>5</td><td>1</td></tr>
+    <tr><td>32</td><td>Backend</td><td>As a user I want to save to database my current game state.</td><td>13</td><td>2</td></tr>
+    <tr><td>33</td><td>Backend</td><td>As a user I want to restore from database my previous settings.</td><td>5</td><td>2</td></tr>
+    <tr><td>34</td><td>Backend</td><td>As a user I want to restore from database my previous game state.</td><td>5</td><td>2</td></tr>
+    <tr><td>35</td><td>Gameplay</td><td>As a user I want to win a stage by killing all enemies.</td><td>5</td><td>1</td></tr>
+    <tr><td>36</td><td>Gameplay</td><td>As a user I want to make my character move right/left by pressing preconfigured buttons (in OPT).</td><td>2</td><td>1</td></tr>
+    <tr><td>37</td><td>Gameplay</td><td>As a user I want to make my character jump by pressing preconfigured button (in OPT).</td><td>3</td><td>1</td></tr>
+    <tr><td>38</td><td>Gameplay</td><td>As a user I want to have multiple platform scenery frontstage tiles,</td><td>8</td><td>1</td></tr>
+    <tr><td>39</td><td>Gameplay</td><td>As a user I want to have multiple platform scenery backstage tiles,</td><td>8</td><td>2</td></tr>
+    <tr><td>40</td><td>Gameplay</td><td>As a user I want to have multiple platform scenery active frontstage tiles, action tiles.</td><td>21</td><td>3</td></tr>
+    <tr><td>41</td><td>Gameplay</td><td>As a user I want action tiles to behave in the specific way according to situation.</td><td>21</td><td>3</td></tr>
+    <tr><td>42</td><td>Gameplay</td><td>As a user I want to make my character pick up items.</td><td>5</td><td>2</td></tr>
+    <tr><td>43</td><td>Gameplay</td><td>As a user I want to gather XP for killing enemies.</td><td>5</td><td>2</td></tr>
+    <tr><td>44</td><td>Gameplay</td><td>As a user I want to upgrade my character in CV based on gathered xp (experience points).</td><td>21</td><td>3</td></tr>
+    <tr><td>45</td><td>Gameplay</td><td>As a user I want my character and enemies to have basic statistics: Health Points (HP), max and current</td><td>13</td><td>1</td></tr>
+    <tr><td>46</td><td>Gameplay</td><td>As a user I want my character and enemies to have basic statistics: Melee Attack Strength, max and current</td><td>8</td><td>1</td></tr>
+    <tr><td>47</td><td>Gameplay</td><td>As a user I want my character and enemies to have basic statistics: Ranged Attack Strength, max and current</td><td>13</td><td>2</td></tr>
+    <tr><td>48</td><td>Gameplay</td><td>As a user I want my character and enemies to have basic statistics: Ranged Attack Strength modifiers (versus specific enemies), max and current</td><td>21</td><td>3</td></tr>
+    <tr><td>49</td><td>Gameplay</td><td>As a user I want my character and enemies to have basic statistics: Speed (how fast a character can attack/move), max and current</td><td>21</td><td>1</td></tr>
+    <tr><td>50</td><td>Gameplay</td><td>As a user I want my character and enemies to have basic statistics: Armor (calculates damage), max and current</td><td>21</td><td>2</td></tr>
+    <tr><td>51</td><td>Gameplay</td><td>As a user I want my character and enemies to have basic statistics: Armor modifiers (versus specific types of attacks), max and current</td><td>21</td><td>3</td></tr>
+    <tr><td>52</td><td>Gameplay</td><td>As a user I want my character and enemies to have special attacks (active with cooldown) based on talent tree.</td><td>21</td><td>3</td></tr>
+    <tr><td>53</td><td>Gameplay</td><td>As a user I want to make my character attack by pressing preconfigured buttons (in OPT); attack types: melee single target - based on talent tree passive skills</td><td>13</td><td>1</td></tr>
+    <tr><td>54</td><td>Gameplay</td><td>As a user I want to make my character attack by pressing preconfigured buttons (in OPT); attack types: ranged single target - based on talent tree passive skills</td><td>13</td><td>2</td></tr>
+    <tr><td>55</td><td>Gameplay</td><td>As a user I want to make my character attack by pressing preconfigured buttons (in OPT); attack types: aoe (area of effect) based on talent tree active skills</td><td>21</td><td>3</td></tr>
+    <tr><td>56</td><td>Gameplay</td><td>As a user I want to be able to set a point of origin of my characters aoe attack.</td><td>13</td><td>3</td></tr>
+    <tr><td>57</td><td>Gameplay</td><td>As a user I want my characters’ enemies to spawn in specific way (frequency, location).</td><td>13</td><td>1</td></tr>
+    <tr><td>59</td><td>Gameplay</td><td>As a user I want my characters’ enemies attack by using basic attacks</td><td>8</td><td>1</td></tr>
+    <tr><td>60</td><td>Gameplay</td><td>As a user I want my characters’ enemies attack by using special skills.</td><td>21</td><td>3</td></tr>
+    <tr><td>61</td><td>Gameplay</td><td>As a user I want my characters’ enemies to die after their current HP drops to <= 0%.</td><td>5</td><td>1</td></tr>
+    <tr><td>62</td><td>Gameplay</td><td>As a user I want my character to die after its current HP drops to <= 0% and the Game Over screen to show. (GO)</td><td>5</td><td>1</td></tr>
+    <tr><td>63</td><td>Gameplay</td><td>As a user, from GO, I want to return to CV without any gained XP from the GAMEPLAY.</td><td>5</td><td>2</td></tr>
+    <tr><td>64</td><td>Gameplay</td><td>As a user, after killing all my characters’ enemies, I want the Win! screen to show (WIN).</td><td>5</td><td>1</td></tr>
+    <tr><td>65</td><td>Gameplay</td><td>As a user, from WIN, I want to return to CV with all the gained XP from the GAMEPLAY.</td><td>3</td><td>2</td></tr>
+    <tr><td>67</td><td>Gameplay</td><td>As a user I want to have classes: Vanguard - melee/tank</td><td>34</td><td>1</td></tr>
+    <tr><td>68</td><td>Gameplay</td><td>As a user I want to have classes: Martial Artist - melee/dps</td><td>8</td><td>2</td></tr>
+    <tr><td>69</td><td>Gameplay</td><td>As a user I want to have classes: Gunman - ranged/dps</td><td>13</td><td>2</td></tr>
+    <tr><td>70</td><td>Gameplay</td><td>As a user I want to have classes: Occultist - ranged/dps</td><td>13</td><td>3</td></tr>
+    <tr><td>72</td><td>Gameplay</td><td>As a user I want to have following types of skills: passive skills (boost basic stats)</td><td>8</td><td>2</td></tr>
+    <tr><td>73</td><td>Gameplay</td><td>As a user I want to have following types of skills: active skills (usable from player hud)</td><td>13</td><td>3</td></tr>
+    <tr><td>75</td><td>Gameplay</td><td>As a user I want to fight with following types of enemies: Demon - melee dps</td><td>21</td><td>1</td></tr>
+    <tr><td>76</td><td>Gameplay</td><td>As a user I want to fight with following types of enemies: Fallen angel - melee tank</td><td>8</td><td>2</td></tr>
+    <tr><td>77</td><td>Gameplay</td><td>As a user I want to fight with following types of enemies: Evil Spirit - ranged dps</td><td>21</td><td>3</td></tr>
+    <tr><td>78</td><td>Gameplay</td><td>As a user I want to fight with following types of enemies: Revenant - ranged dps</td><td>8</td><td>3</td></tr>
+    <tr><td>79</td><td>Gameplay</td><td>As a user I want to fight with following types of enemies: Undead - melee dps/tank</td><td>5</td><td>3</td></tr>
+    <tr><td>80</td><td>Gameplay</td><td>As a user I want enemies to have the same move capabilities/attack types as player characters.</td><td>13</td><td>1</td></tr>
+    <tr><td>81</td><td>Gameplay</td><td>As a user I want my character and enemies to have basic statistics: Melee Attack Strength modifiers (versus specific enemies), max and current</td><td>21</td><td>3</td></tr>
+
+</table>
+<br>
+<div>
+    Abbreviations:
+    <ul>
+        <li>LS - Login Screen</li>
+        <li>ACS - Account Creation Screen</li>
+        <li>GM - Game Menu</li>
+        <li>CC - Character Creation</li>
+        <li>CV - Character View</li>
+        <li>GL - Game Loading</li>
+        <li>OPT - Options</li>
+        <li>GS - Game Saving</li>
+        <li>GO - Game Over</li>
+        <li>WIN - Win Screen</li>
+    </ul>
+</div>
+
+
+</body>
+</html>
