@@ -4,6 +4,8 @@ class Preloader extends Phaser.State {
     super();
     this.asset = null;
     this.ready = false;
+    this.knightFrameWidth = 147;
+    this.knightFrameHeight = 165;
   }
 
   preload() {
@@ -22,6 +24,8 @@ class Preloader extends Phaser.State {
     this.game.load.image('text_go', 'assets/text_go.png');
     this.game.load.image('text_ready', 'assets/text_ready.png');
 
+    this.game.load.spritesheet('knight','./assets/Knight.png',this.knightFrameWidth,this.knightFrameHeight);
+    this.game.load.image('ground','./assets/platform.png');
     this.game.load.spritesheet('target', 'assets/target.png',128.66,128);
 
     this.game.load.audio('gunshot','assets/gunshot.wav');

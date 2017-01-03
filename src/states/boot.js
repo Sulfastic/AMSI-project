@@ -32,7 +32,13 @@ class Boot extends Phaser.State {
 
   initGlobalVariables(){
     this.game.global = {
-      score: 0
+      score: 0,
+        BOUNCE: 0.1,
+        GRAVITY: 900,
+        GO_LEFT_KEY: Phaser.KeyCode.A,
+        GO_RIGHT_KEY: Phaser.KeyCode.D,
+        JUMP_KEY: Phaser.KeyCode.W,
+        MELEE_ATTACK_KEY: Phaser.KeyCode.SPACEBAR
     };
   }
 

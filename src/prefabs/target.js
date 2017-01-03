@@ -38,7 +38,6 @@ class Target extends Phaser.Sprite {
 
   clicked () {
     this.ding.play();
-
     this.game.global.score++;
   }
 
