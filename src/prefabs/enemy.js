@@ -26,7 +26,6 @@ class Enemy extends Creature {
             this.goLeft();
         }
 
-
         if (this.body.touching.right) this.dir = false;
 
 

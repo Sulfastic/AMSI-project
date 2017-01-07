@@ -2,6 +2,8 @@
  * Created by Sulf on 1/3/2017.
  */
 
+import $ from 'jquery';
+
 class LogIn extends Phaser.State {
 
     constructor() {
@@ -75,6 +77,18 @@ class LogIn extends Phaser.State {
 
     //create some cool tweens and apply them to 'this.ready' and 'this.go'
     submit () {
+
+        $.ajax({
+            method: "GET",
+            url: "www.w3schools.com",
+            success: function(result) {
+                console.log("dziala");
+            },
+            failure: function () {
+                console.log("nie dziala");
+            }
+        });
+
         this.game.state.start('loggedInMenu');
     }
 
