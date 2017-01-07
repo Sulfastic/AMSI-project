@@ -20,7 +20,6 @@ class Preloader extends Phaser.State {
 
   loadResources() {
 
-    this.game.load.image('background','assets/bg_wood.png');
     this.game.load.image('buttonGreen','assets/button_green.png');
     this.game.load.image('buttonRed','assets/button_red.png');
     this.game.load.image('buttonYellow','assets/button_yellow.png');

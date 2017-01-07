@@ -81,7 +81,7 @@ class LoggedInMenu extends Phaser.State {
         //   go_tween_repeat_num -= 0.5;
         //   if(go_tween_repeat_num < 1){
         //     this.go.visible = false;
-        this.game.state.start('logIn');
+        this.game.state.start('game');
         //   }
         // };
         // const ready_tween_loop = function(){
