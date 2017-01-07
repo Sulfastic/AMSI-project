@@ -19,7 +19,13 @@ class Preloader extends Phaser.State {
   }
 
   loadResources() {
+
+    this.game.load.image('background','assets/bg_wood.png');
+    this.game.load.image('buttonGreen','assets/button_green.png');
+    this.game.load.image('buttonRed','assets/button_red.png');
+    this.game.load.image('buttonYellow','assets/button_yellow.png');
     this.game.load.image('background','assets/Haunted_house.jpg');
+    
     this.game.load.image('crosshairs', 'assets/crosshair_red_small.png');
     this.game.load.image('text_go', 'assets/text_go.png');
     this.game.load.image('text_ready', 'assets/text_ready.png');

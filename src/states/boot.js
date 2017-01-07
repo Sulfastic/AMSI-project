@@ -9,6 +9,7 @@ class Boot extends Phaser.State {
   }
 
   create() {
+    this.game.add.plugin(Fabrique.Plugins.InputField);
     this.game.input.maxPointers = 1;
 
     //setup device scaling

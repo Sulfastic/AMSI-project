@@ -27,6 +27,7 @@
     "double_tap_to_zoom_enabled": false
   },
   "devDependencies": {
+    "@orange-games/phaser-input": "^1.2.6",
     "async": "^2.1.2",
     "babel": "^6.5.2",
     "babel-cli": "^6.9.0",
