@@ -18,8 +18,6 @@ class PlayerCharacter extends Creature {
         this.jumpKey = this.game.input.keyboard.addKey(this.game.global.JUMP_KEY);
         this.attackMeleeKey = this.game.input.keyboard.addKey(this.game.global.MELEE_ATTACK_KEY);
 
-        //set up click listeners
-        this.attackMeleeKey.onDown.add(this.shoot, this);
     }
 
     update(){

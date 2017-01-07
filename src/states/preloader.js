@@ -19,7 +19,7 @@ class Preloader extends Phaser.State {
   }
 
   loadResources() {
-    this.game.load.image('background','assets/bg_wood.png');
+    this.game.load.image('background','assets/Haunted_house.jpg');
     this.game.load.image('crosshairs', 'assets/crosshair_red_small.png');
     this.game.load.image('text_go', 'assets/text_go.png');
     this.game.load.image('text_ready', 'assets/text_ready.png');
@@ -30,6 +30,8 @@ class Preloader extends Phaser.State {
 
     this.game.load.audio('gunshot','assets/gunshot.wav');
     this.game.load.audio('ding','assets/ding.wav');
+
+    this.game.load.image('collage1','assets/hyptosis_tile-art-batch-1.png');
   }
 
   onLoadComplete() {

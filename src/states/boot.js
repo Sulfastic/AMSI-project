@@ -34,10 +34,10 @@ class Boot extends Phaser.State {
     this.game.global = {
       score: 0,
         BOUNCE: 0.1,
-        GRAVITY: 900,
-        GO_LEFT_KEY: Phaser.KeyCode.A,
-        GO_RIGHT_KEY: Phaser.KeyCode.D,
-        JUMP_KEY: Phaser.KeyCode.W,
+        GRAVITY: 2000,
+        GO_LEFT_KEY: Phaser.KeyCode.LEFT,
+        GO_RIGHT_KEY: Phaser.KeyCode.RIGHT,
+        JUMP_KEY: Phaser.KeyCode.UP,
         MELEE_ATTACK_KEY: Phaser.KeyCode.SPACEBAR
     };
   }

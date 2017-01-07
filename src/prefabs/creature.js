@@ -10,16 +10,6 @@ class Creature extends Phaser.Sprite {
     constructor(game, x, y, spritesheet, frame, health_points, character_speed, game_level_name, melee_attack_strength, melee_attack_speed, melee_attack_reach) {
         super(game, x, y, spritesheet, frame);
 
-        this.game.global.BOUNCE = 0.1;
-        this.game.global.GRAVITY = 1500;
-        this.game.global.GO_LEFT_KEY = Phaser.KeyCode.A;
-        this.game.global.GO_RIGHT_KEY = Phaser.KeyCode.D;
-        this.game.global.JUMP_KEY = Phaser.KeyCode.W;
-        this.game.global.MELEE_ATTACK_KEY = Phaser.KeyCode.SPACEBAR;
-
-        this.knightFrameWidth = 147;
-        this.knightFrameHeight = 165;
-
         //basic statistics
         this.name = game_level_name;
         this.hp_max = health_points;//about 100-300 at 1st lvl
@@ -79,7 +69,7 @@ class Creature extends Phaser.Sprite {
             this.facing = -1;
             this.animations.play('left');
         }
-
+        this.game.physics.arcade.collide(this,this.game.world.getByName('Platforms'));
     }
 
     goRight(){
@@ -88,6 +78,7 @@ class Creature extends Phaser.Sprite {
             this.facing = 1;
             this.animations.play('right');
         }
+        this.game.physics.arcade.collide(this,this.game.world.getByName('Platforms'));
     }
 
     stop(){
@@ -154,6 +145,7 @@ class Creature extends Phaser.Sprite {
             else this.animations.play('attack right');
             let target = this.findMeleeTarget();
             if(target!=null) target.damage(this.mast_curr);
+            this.shoot();
         }
     }
 
