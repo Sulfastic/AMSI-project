@@ -36,134 +36,140 @@ class Creature extends Phaser.Sprite {
         this.body.collideWorldBounds = true;
 
         //adding animations for walking with standard spritesheet, 10 frames per second, 'true' for looped animation
-        this.animations.add('right',[1,2,3,4,5,6,7,8,9,8,7,10],this.sp_curr/15,true);
-        this.animations.add('left',[40,39,38,37,36,35,34,33,32,33,34,31],this.sp_curr/15,true);
-        this.animations.add('attack right',[11,12,13,14,15,16,17,18,19,20],10*this.masp_curr,false);
-        this.animations.add('attack left',[30,29,28,27,26,25,24,23,22,21],10*this.masp_curr,false);
+        this.animations.add('right', [1, 2, 3, 4, 5, 6, 7, 8, 9, 8, 7, 10], this.sp_curr / 15, true);
+        this.animations.add('left', [40, 39, 38, 37, 36, 35, 34, 33, 32, 33, 34, 31], this.sp_curr / 15, true);
+        this.animations.add('attack right', [11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 10 * this.masp_curr, false);
+        this.animations.add('attack left', [30, 29, 28, 27, 26, 25, 24, 23, 22, 21], 10 * this.masp_curr, false);
 
         //flags
         this.facing = 1;//negative for facing left, positive for facing right
         this.busy = false;//flag for managing the actions of the creature, for example character is busy when it is making an attack
 
         //adding text to display
-        this.nameText=this.addChild(new Phaser.Text(this.game,0,-25,this.name,{font: 'normal 15pt Arial', fill: 'red'}));
-        this.hpText=this.addChild(new Phaser.Text(this.game,0,this.height,'HP: '+this.hp_curr+'/'+this.hp_max,{font: 'normal 15pt Arial', fill: 'red'}));
+        this.nameText = this.addChild(new Phaser.Text(this.game, 0, -25, this.name, {
+            font: 'normal 15pt Arial',
+            fill: 'red'
+        }));
+        this.hpText = this.addChild(new Phaser.Text(this.game, 0, this.height, 'HP: ' + this.hp_curr + '/' + this.hp_max, {
+            font: 'normal 15pt Arial',
+            fill: 'red'
+        }));
     }
 
-    update(){
-        this.hpText.text = 'HP: '+this.hp_curr+'/'+this.hp_max;
-        this.game.physics.arcade.collide(this,this.game.world.getByName('Players'));
-        this.game.physics.arcade.collide(this,this.game.world.getByName('Enemies'));
-        this.game.physics.arcade.collide(this,this.game.world.getByName('Platforms'));
+    update() {
+        this.hpText.text = 'HP: ' + this.hp_curr + '/' + this.hp_max;
+        this.game.physics.arcade.collide(this, this.game.world.getByName('Players'));
+        this.game.physics.arcade.collide(this, this.game.world.getByName('Enemies'));
+        this.game.physics.arcade.collide(this, this.game.world.getByName('Platforms'));
     }
 
-    shoot(){
+    shoot() {
         this.gunshot.play();
     }
 
     //moving methods
 
-    goLeft(){
-        if(!this.busy){
-            this.body.velocity.x=-this.sp_curr;
+    goLeft() {
+        if (!this.busy) {
+            this.body.velocity.x = -this.sp_curr;
             this.facing = -1;
             this.animations.play('left');
         }
-        this.game.physics.arcade.collide(this,this.game.world.getByName('Platforms'));
+        this.game.physics.arcade.collide(this, this.game.world.getByName('Platforms'));
     }
 
-    goRight(){
-        if(!this.busy){
-            this.body.velocity.x=this.sp_curr;
+    goRight() {
+        if (!this.busy) {
+            this.body.velocity.x = this.sp_curr;
             this.facing = 1;
             this.animations.play('right');
         }
-        this.game.physics.arcade.collide(this,this.game.world.getByName('Platforms'));
+        this.game.physics.arcade.collide(this, this.game.world.getByName('Platforms'));
     }
 
-    stop(){
+    stop() {
         this.body.velocity.x = 0;
-        if(!this.busy){
+        if (!this.busy) {
             this.animations.stop();
-            if(this.facing>0) this.frame=0;
-            else this.frame=41;
+            if (this.facing > 0) this.frame = 0;
+            else this.frame = 41;
         }
     }
 
-    jump(){
-        if(this.body.touching.down) this.body.velocity.y=-this.sp_curr*5;
+    jump() {
+        if (this.body.touching.down) this.body.velocity.y = -this.sp_curr * 5;
     }
 
 
-    modifySpeed(amount){
+    modifySpeed(amount) {
         this.sp_curr += amount;
-        if(this.sp_curr<0) this.sp_curr=0;
-        else if (this.sp_curr>this.sp_max) this.sp_curr = this.sp_max;
+        if (this.sp_curr < 0) this.sp_curr = 0;
+        else if (this.sp_curr > this.sp_max) this.sp_curr = this.sp_max;
     }
 
     //taking damage and healing capabilities, returning hp_curr
 
-    damage(amount){
+    damage(amount) {
         this.hp_curr -= amount;
-        if(this.hp_curr<=0) this.kill();
+        if (this.hp_curr <= 0) this.kill();
     }
 
-    heal(amount){
+    heal(amount) {
         this.hp_curr += amount;
-        if(this.hp_curr>this.hp_max) this.hp_curr=this.hp_max;
+        if (this.hp_curr > this.hp_max) this.hp_curr = this.hp_max;
     }
 
 
     //melee attack methods
 
-    modifyMeleeAttackStrength(amount){
-        this.mast_curr+=amount;
-        if(this.mast_curr>this.mast_max) this.mast_curr = this.mast_max;
-        else if (this.mast_curr<0) this.mast_curr = 0;
+    modifyMeleeAttackStrength(amount) {
+        this.mast_curr += amount;
+        if (this.mast_curr > this.mast_max) this.mast_curr = this.mast_max;
+        else if (this.mast_curr < 0) this.mast_curr = 0;
     }
 
-    modifyMeleeAttackSpeed(amount){
-        this.masp_curr+=amount;
-        if(this.masp_curr>this.masp_max) this.masp_curr = this.masp_max;
-        else if (this.masp_curr<0) this.masp_curr = 0;
+    modifyMeleeAttackSpeed(amount) {
+        this.masp_curr += amount;
+        if (this.masp_curr > this.masp_max) this.masp_curr = this.masp_max;
+        else if (this.masp_curr < 0) this.masp_curr = 0;
     }
 
-    modifyMeleeAttackReach(amount){
-        this.ma_reach_curr+=amount;
-        if(this.ma_reach_curr>this.ma_reach_max) this.ma_reach_curr = this.ma_reach_max;
-        else if (this.ma_reach_curr<0) this.ma_reach_curr = 0;
+    modifyMeleeAttackReach(amount) {
+        this.ma_reach_curr += amount;
+        if (this.ma_reach_curr > this.ma_reach_max) this.ma_reach_curr = this.ma_reach_max;
+        else if (this.ma_reach_curr < 0) this.ma_reach_curr = 0;
     }
 
-    attackMelee(){
-        if(!this.busy&&this.body.touching.down){
+    attackMelee() {
+        if (!this.busy && this.body.touching.down) {
             this.busy = true;
-            this.body.velocity.x=0;
+            this.body.velocity.x = 0;
             let timer = this.game.time.create();
-            timer.add(1000/this.masp_curr,this.notBusy,this);
+            timer.add(1000 / this.masp_curr, this.notBusy, this);
             timer.start();
-            if(this.facing<0) this.animations.play('attack left');
+            if (this.facing < 0) this.animations.play('attack left');
             else this.animations.play('attack right');
             let target = this.findMeleeTarget();
-            if(target!=null) target.damage(this.mast_curr);
+            if (target != null) target.damage(this.mast_curr);
             this.shoot();
         }
     }
 
-    notBusy(){
+    notBusy() {
         this.busy = false;
         this.stop();
     }
 
-    findMeleeTarget(){
-        return this.game.world.getByName('Creatures').getClosestTo(this,this.isCreatureInFront,this);
+    findMeleeTarget() {
+        return this.game.world.getByName('Creatures').getClosestTo(this, this.isCreatureInFront, this);
     }
 
-    isCreatureInFront(target,distance){
-        if(target.hp_curr!=null&&target!=this){
-            if(this.facing<0&&target.x<this.x){
+    isCreatureInFront(target, distance) {
+        if (target.hp_curr != null && target != this) {
+            if (this.facing < 0 && target.x < this.x) {
                 return distance <= target.width + this.ma_reach_curr;
             }
-            else if(this.facing>0&&target.x>this.x){
+            else if (this.facing > 0 && target.x > this.x) {
                 return distance <= this.width + this.ma_reach_curr;
             }
             else return false;
