@@ -34,6 +34,7 @@ class Creature extends Phaser.Sprite {
         this.body.bounce.y = this.game.global.BOUNCE;
         this.body.gravity.y = this.game.global.GRAVITY;
         this.body.collideWorldBounds = true;
+        this.body.tilePadding.set(32,32);
 
         //adding animations for walking with standard spritesheet, 10 frames per second, 'true' for looped animation
         this.animations.add('right', [1, 2, 3, 4, 5, 6, 7, 8, 9, 8, 7, 10], this.sp_curr / 15, true);
@@ -58,9 +59,10 @@ class Creature extends Phaser.Sprite {
 
     update() {
         this.hpText.text = 'HP: ' + this.hp_curr + '/' + this.hp_max;
+        this.game.physics.arcade.collide(this, this.game.world.getByName('Platforms'));
         this.game.physics.arcade.collide(this, this.game.world.getByName('Players'));
         this.game.physics.arcade.collide(this, this.game.world.getByName('Enemies'));
-        this.game.physics.arcade.collide(this, this.game.world.getByName('Platforms'));
+        if(this.busy) this.stop();
     }
 
     shoot() {
@@ -89,6 +91,7 @@ class Creature extends Phaser.Sprite {
 
     stop() {
         this.body.velocity.x = 0;
+        this.game.physics.arcade.collide(this, this.game.world.getByName('Platforms'));
         if (!this.busy) {
             this.animations.stop();
             if (this.facing > 0) this.frame = 0;

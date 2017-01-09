@@ -16,7 +16,7 @@ class Enemy extends Creature {
 
     update(){
         super.update();
-        this.move();
+        //this.move();
     }
 
     move() {
@@ -32,16 +32,6 @@ class Enemy extends Creature {
         if (this.body.touching.left) this.dir = true;
 
     }
-
-    damage(amount){
-        this.hp_curr -= amount;
-        if(this.hp_curr<=0) {
-            this.reset(500,100);
-            this.hp_curr = 100;
-            this.game.global.score++;
-        }
-    }
-
 }
 
 export default Enemy;

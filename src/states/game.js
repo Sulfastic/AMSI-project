@@ -1,5 +1,5 @@
-import PlayerCharacter from '../prefabs/player-character';
-import Enemy from '../prefabs/enemy';
+import Vanguard from '../prefabs/vanguard';
+import Demon from '../prefabs/demon';
 
 class Game extends Phaser.State {
 
@@ -27,13 +27,13 @@ class Game extends Phaser.State {
 
     //setup player
     this.players = this.game.add.group(this.game.world,'Players');
-    this.player = new PlayerCharacter(this.game,150,this.game.world.height-300,'knight',4,30,300,'Player',10,2,40);
+    this.player = new Vanguard(this.game,150,this.game.world.height-300,'knight',4,'Player',5);//Vanguard 5th level
     this.players.add(this.player);
 
-    //setup enemy
+    //setup enemy group
     this.enemies = this.game.add.group(this.game.world,'Enemies');
-    this.enemy = new Enemy(this.game,this.game.world.width-350,this.game.world.height-300,'knight',4,100,150,'Enemy',10,1,40);
-    this.enemies.add(this.enemy);
+    //setup spawning point
+    this.spawningPoint = {x: this.game.world.width-350, y: this.game.world.height-300};
 
 
     //setup UI
@@ -47,14 +47,18 @@ class Game extends Phaser.State {
     this.endGameTimer.add(Phaser.Timer.SECOND * 90, this.endGame,this);
     this.endGameTimer.start();
 
+    //setup score
+    this.game.global.score = 0;
   }
 
   update() {
-
     this.countdownText.setText( (this.endGameTimer.duration/1000).toFixed(1));
+    if(this.players.countLiving()==0) this.endGame();
+    if(this.enemies.countLiving()==0) this.spawnEnemy();
   }
 
   endGame() {
+    this.game.global.score = this.enemies.countDead();
     this.game.state.start('gameover');
   }
 
@@ -84,8 +88,11 @@ class Game extends Phaser.State {
       platformGroup.add(new Phaser.TileSprite(game,stageBounds.xstart-32,stageBounds.ystart-32,64,192,this.shinglesLeftTexture)).tileScale = {x: 2,y: 2};
       platformGroup.add(new Phaser.TileSprite(game,stageBounds.xend-32,stageBounds.ystart-32,64,192,this.shinglesRightTexture)).tileScale = {x: 2,y: 2};
       platformGroup.add(new Phaser.TileSprite(game,stageBounds.xstart+32,stageBounds.ystart-32,stageBounds.xend-stageBounds.xstart-64,128,this.shinglesFrontTexture)).tileScale = {x: 2,y: 2};
+  }
 
-
+  spawnEnemy(){
+      this.enemy = new Demon(this.game,this.spawningPoint.x,this.spawningPoint.y,'knight',4,'Demon',1);//Demon 1st level
+      this.enemies.add(this.enemy);
   }
 
 }
