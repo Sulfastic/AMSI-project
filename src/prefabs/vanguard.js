@@ -27,11 +27,11 @@ class Vanguard extends PlayerCharacter {
 
 
     getStatsByLevel(level) {
-        var hp = [300,400,500,600,700,800,900,1000,1100,1200];
-        var speed = [200,220,240,260,280,300,320,340,360,380];//character speed in pixels/second
-        var mast = [50,60,70,80,90,100,110,120,130,140];//melee attack strength
-        var masp = [1,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9];//melee attack speed in attacks/second
-        var mareach = [40,45,50,55,60,65,70,75,80,85];//melee attack reach in pixels
+        const hp = [300,400,500,600,700,800,900,1000,1100,1200];
+        const speed = [200,220,240,260,280,300,320,340,360,380];//character speed in pixels/second
+        const mast = [50,60,70,80,90,100,110,120,130,140];//melee attack strength
+        const masp = [1,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9];//melee attack speed in attacks/second
+        const mareach = [40,45,50,55,60,65,70,75,80,85];//melee attack reach in pixels
         return {hp: hp[level-1], speed: speed[level-1], mast: mast[level-1], masp: masp[level-1], mareach: mareach[level-1]};
     }
 }
