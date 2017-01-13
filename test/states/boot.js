@@ -4,7 +4,7 @@ import assert from 'assert';
 
 describe('dziala?', function() {
 
-	var costam = new engine();
+	const costam = new engine();
 
 	it('dziala!', function() {
 		assert("Phaser",costam.getEngine());

@@ -27,7 +27,7 @@ class Menu extends Phaser.State {
   }
 
   saveVarsToLocalStorage(){
-    var max = localStorage["maxScore"] || 0; //default value of 0 is it does not exist
+    let max = localStorage["maxScore"] || 0; //default value of 0 is it does not exist
     if (this.game.global.score > max){ localStorage["maxScore"] = this.game.global.score; }
   }
 
@@ -38,7 +38,7 @@ class Menu extends Phaser.State {
 
   onInputDown () {
     if(this.canContinueToNextState){
-      this.game.state.start('menu');
+      this.game.state.start('loggedInMenu');
     }
   }
 

@@ -51,11 +51,11 @@ class Demon extends Enemy {
 
 
     getStatsByLevel(level) {
-        var hp = [100,120,140,160,180,200,220,240,260,270];
-        var speed = [200,220,240,260,280,300,320,340,360,380];//character speed in pixels/second
-        var mast = [70,80,90,100,110,120,130,140,150,160];//melee attack strength
-        var masp = [0.8,0.85,0.9,0.95,1,1.05,1.1,1.15,1.2,1.25];//melee attack speed in attacks/second
-        var mareach = [20,25,30,35,40,45,50,55,60,65];//melee attack reach in pixels
+        const hp = [100,120,140,160,180,200,220,240,260,270];
+        const speed = [200,220,240,260,280,300,320,340,360,380];//character speed in pixels/second
+        const mast = [70,80,90,100,110,120,130,140,150,160];//melee attack strength
+        const masp = [0.8,0.85,0.9,0.95,1,1.05,1.1,1.15,1.2,1.25];//melee attack speed in attacks/second
+        const mareach = [20,25,30,35,40,45,50,55,60,65];//melee attack reach in pixels
         return {hp: hp[level-1], speed: speed[level-1], mast: mast[level-1], masp: masp[level-1], mareach: mareach[level-1]};
     }
 }
