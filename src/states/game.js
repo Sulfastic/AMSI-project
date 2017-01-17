@@ -93,6 +93,10 @@ class Game extends Phaser.State {
   spawnEnemy(){
       this.enemy = new Demon(this.game,this.spawningPoint.x,this.spawningPoint.y,'knight',4,'Demon',1);//Demon 1st level
       this.enemies.add(this.enemy);
+
+      this.enemy = new Demon(this.game,this.spawningPoint.x,this.spawningPoint.y,'knight',4,'Demon',1);//Demon 1st level
+      this.enemies.add(this.enemy);
+
   }
 
 }
