@@ -6,7 +6,7 @@
  import LoggedInMenu from './account/loggedInMenu';
  import Preloader from './states/preloader';
  import Gameover from './states/gameover';
-
+ import Win from './states/win';
 
 const game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.AUTO, 'Family_Business-game');
 
@@ -18,5 +18,6 @@ const game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.AUTO,
  game.state.add('loggedInMenu', new LoggedInMenu());
  game.state.add('preloader', new Preloader());
  game.state.add('gameover', new Gameover());
+ game.state.add('win', new Win());
 
  game.state.start('boot');
