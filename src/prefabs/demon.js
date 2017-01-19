@@ -18,35 +18,128 @@ class Demon extends Enemy {
         //recording the level
         this.level = enemyLevel;
         //displaying the class and level, moving the name higher
-        this.classText = this.addChild(new Phaser.Text(this.game, 0, -25, 'Demon, Level ' + this.level, {
-            font: 'normal 15pt Arial',
-            fill: 'red'
-        }));
+        this.classText = this.addChild(new Phaser.Text(this.game, 0, -25, 'Demon, Level ' + this.level, this.hudTextStyle));
         this.nameText.y=-50;
+
+        //variables controlling how often does AI need to be executed
+        this.targetWithinSight = null;
+        this.AIsPerSecond = 2;
+        this.framesToAI = 0;
     }
 
     update(){
         super.update();
-        this.AI();
+        if(this.alive){
+            this.framesToAI++;
+            if(this.framesToAI>=60/this.AIsPerSecond) {
+                this.framesToAI = 0;
+            }
+            this.AI();
+        }
+    }
+
+    addAnimations() {
+        let right = [];
+        let left = [];
+
+        for(let i = 0; i < 46; i++) {
+            right.push(i);
+        }
+
+        for(let i = 84; i < 130; i++) {
+            left.push(i);
+        }
+
+        this.animations.add('standingRight', [52], this.sp_curr / 20, true);
+        this.animations.add('standingLeft', [65], this.sp_curr / 20, true);
+        this.animations.add('right', right, this.sp_curr, true);
+        this.animations.add('left', left, this.sp_curr, true);
+        this.animations.add('attack right', [47, 48, 49, 50, 51], 9 * this.masp_curr, false);
+        this.animations.add('attack left', [79, 80, 81, 82, 83], 9 * this.masp_curr, false);
     }
 
     AI(){
-        let targetWithinSight = this.game.world.getByName('Players').getClosestTo(this);
-        if(targetWithinSight!=null){
+        if(this.framesToAI==0){
+            this.targetWithinSight = this.game.world.getByName('Players').getClosestTo(this, this.isTargetWithinSight, this);
+        }
+        if(this.targetWithinSight!=null){
             let targetWithinReach = this.game.world.getByName('Players').getClosestTo(this, this.isTargetWithinReach, this);
-            if(targetWithinReach!=null){
-                if (targetWithinReach.x>this.x) this.facing=1;
-                else this.facing=-1;
+            if(!this.body.onFloor()){//if demon is on someone
+                this.goLeft();
+            }
+            else if(targetWithinReach!=null){
+                if (targetWithinReach.x>this.x) {
+                    this.facing=1;
+                }
+                else {
+                    this.facing=-1;
+                }
                 this.attackMelee();
             }
-            else if(targetWithinSight.x>this.x) this.goRight();
-            else this.goLeft();
+            else if(this.targetWithinSight.x>this.x) {
+                this.goRight();
+            }
+            else {
+                this.goLeft();
+            }
+        }
+        else{
+            this.stop();
         }
     }
 
     isTargetWithinReach(target,distance){
-        if(target.x>this.x) return distance<=this.ma_reach_curr+this.width;
-        else return distance<=this.ma_reach_curr+target.width;
+        if(target.y>this.y+this.height){
+            return distance<=this.ma_reach_curr+this.height;
+        }
+        else if(target.x>this.x) {
+            return distance<=this.ma_reach_curr+this.width;
+        }
+        else {
+            return distance<=this.ma_reach_curr+target.width;
+        }
+    }
+
+    isTargetWithinSight (target,distance){
+        let line = new Phaser.Line(this.x+this.width/2,this.y+this.height/2,target.x+target.width/2,target.y+target.height/2);
+        if((distance>target.height+this.ma_reach_curr)&&((line.start.x<line.end.x+30&&line.start.x>line.end.x-30)||(line.end.x<line.start.x+30&&line.end.x>line.start.x-30))){//a margin of error for checking intersection
+            return false;
+        }
+        let platformsTiles = [];
+        let crossablePlatformsTiles = [];
+
+        if(target.x>this.x){//get tiles that are within the this-target rectangle
+            if(target.y>this.y){
+                platformsTiles = this.game.world.getByName('Platforms').children[0].getTiles(this.x,this.y,target.x-this.x,target.y-this.y);
+                crossablePlatformsTiles = this.game.world.getByName('CrossablePlatforms').children[0].getTiles(this.x,this.y,target.x-this.x,target.y-this.y);
+            }
+            else{
+                platformsTiles = this.game.world.getByName('Platforms').children[0].getTiles(this.x,target.y,target.x-this.x,this.y-target.y);
+                crossablePlatformsTiles = this.game.world.getByName('CrossablePlatforms').children[0].getTiles(this.x,target.y,target.x-this.x,this.y-target.y);
+            }
+        }
+        else{
+            if(target.y>this.y){
+                platformsTiles = this.game.world.getByName('Platforms').children[0].getTiles(target.x,this.y,this.x-target.x,target.y-this.y);
+                crossablePlatformsTiles = this.game.world.getByName('CrossablePlatforms').children[0].getTiles(target.x,this.y,this.x-target.x,target.y-this.y);
+            }
+            else{
+                platformsTiles = this.game.world.getByName('Platforms').children[0].getTiles(target.x,target.y,this.x-target.x,this.y-target.y);
+                crossablePlatformsTiles = this.game.world.getByName('CrossablePlatforms').children[0].getTiles(target.x,target.y,this.x-target.x,this.y-target.y);
+            }
+        }
+
+        for(let i=0;i<platformsTiles.length;i++){
+            if(Phaser.Line.intersectsRectangle(line,platformsTiles[i])&&platformsTiles[i].index!=-1) {
+                return false;
+            }
+        }
+        for(let i=0;i<crossablePlatformsTiles.length;i++){
+            if(Phaser.Line.intersectsRectangle(line,crossablePlatformsTiles[i])&&crossablePlatformsTiles[i].index!=-1){
+                return false;
+            }
+        }
+        return true;
     }
 
 

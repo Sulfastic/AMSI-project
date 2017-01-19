@@ -92,24 +92,24 @@ class LogIn extends Phaser.State {
     }
 
     submit () {
-        const data = {
-            nickname: this.login.value,
-            password: this.password.value
-        };
+         const data = {
+         nickname: this.login.value,
+         password: this.password.value
+         };
 
-        AJAX({
-            method: "POST",
-            url: "http://localhost:8080/users/login",
-            contentType: 'application/json;charset=UTF-8',
-            data: JSON.stringify(data),
-            success: function() {
-                this.game.state.start('loggedInMenu');
-            }.bind(this),
-            error: function () {
-                this.login = this.game.add.inputField(500, this.game.world.centerY - 150, this.markError(Fabrique.InputType.text, "Login"));
-                this.password = this.game.add.inputField(500, this.game.world.centerY, this.markError(Fabrique.InputType.password, "Password"));
-            }.bind(this)
-        });
+         AJAX({
+         method: "POST",
+         url: "http://localhost:8080/users/login",
+         contentType: 'application/json;charset=UTF-8',
+         data: JSON.stringify(data),
+         success: function() {
+         this.game.state.start('loggedInMenu');
+         }.bind(this),
+         error: function () {
+         this.login = this.game.add.inputField(500, this.game.world.centerY - 150, this.markError(Fabrique.InputType.text, "Login"));
+         this.password = this.game.add.inputField(500, this.game.world.centerY, this.markError(Fabrique.InputType.password, "Password"));
+         }.bind(this)
+         });
     }
 
     register() {

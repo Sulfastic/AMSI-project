@@ -39,7 +39,8 @@ class Boot extends Phaser.State {
         GO_LEFT_KEY: Phaser.KeyCode.LEFT,
         GO_RIGHT_KEY: Phaser.KeyCode.RIGHT,
         JUMP_KEY: Phaser.KeyCode.UP,
-        MELEE_ATTACK_KEY: Phaser.KeyCode.SPACEBAR
+        MELEE_ATTACK_KEY: Phaser.KeyCode.SPACEBAR,
+        FALL_DOWN_KEY: Phaser.KeyCode.DOWN
     };
   }
 
