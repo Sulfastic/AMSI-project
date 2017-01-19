@@ -38,6 +38,26 @@ class Demon extends Enemy {
         }
     }
 
+    addAnimations() {
+        let right = [];
+        let left = [];
+
+        for(let i = 0; i < 46; i++) {
+            right.push(i);
+        }
+
+        for(let i = 84; i < 130; i++) {
+            left.push(i);
+        }
+
+        this.animations.add('standingRight', [52], this.sp_curr / 20, true);
+        this.animations.add('standingLeft', [65], this.sp_curr / 20, true);
+        this.animations.add('right', right, this.sp_curr, true);
+        this.animations.add('left', left, this.sp_curr, true);
+        this.animations.add('attack right', [47, 48, 49, 50, 51], 9 * this.masp_curr, false);
+        this.animations.add('attack left', [79, 80, 81, 82, 83], 9 * this.masp_curr, false);
+    }
+
     AI(){
         if(this.framesToAI==0){
             this.targetWithinSight = this.game.world.getByName('Players').getClosestTo(this, this.isTargetWithinSight, this);

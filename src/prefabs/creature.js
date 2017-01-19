@@ -34,10 +34,7 @@ class Creature extends Phaser.Sprite {
         this.body.tilePadding.set(32,32);
 
         //adding animations for walking with standard spritesheet, 10 frames per second, 'true' for looped animation
-        this.animations.add('right', [1, 2, 3, 4, 5, 6, 7, 8, 9, 8, 7, 10], this.sp_curr / 15, true);
-        this.animations.add('left', [40, 39, 38, 37, 36, 35, 34, 33, 32, 33, 34, 31], this.sp_curr / 15, true);
-        this.animations.add('attack right', [11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 10 * this.masp_curr, false);
-        this.animations.add('attack left', [30, 29, 28, 27, 26, 25, 24, 23, 22, 21], 10 * this.masp_curr, false);
+        this.addAnimations();
 
         //setup audio
         this.gunshot = this.game.add.audio('gunshot');
@@ -56,6 +53,10 @@ class Creature extends Phaser.Sprite {
         };
         this.nameText = this.addChild(new Phaser.Text(this.game, 0, -25, this.name, this.hudTextStyle));
         this.hpText = this.addChild(new Phaser.Text(this.game, 0, this.height, 'HP: ' + this.hp_curr + '/' + this.hp_max, this.hudTextStyle));
+    }
+
+    addAnimations() {
+        throw new Error("should be overriden");
     }
 
     update() {
@@ -107,22 +108,13 @@ class Creature extends Phaser.Sprite {
         this.body.velocity.x = 0;
         this.game.physics.arcade.collide(this, this.game.world.getByName('Platforms'));
         if (!this.busy) {
-            this.animations.stop();
             if (this.facing > 0) {
-                this.animStopRight();
+                this.animations.play('standingRight');
             }
             else {
-                this.animStopLeft();
+                this.animations.play('standingLeft');
             }
         }
-    }
-
-    animStopRight(){
-        this.frame = 0;
-    }
-
-    animStopLeft(){
-        this.frame = 41;
     }
 
     jump() {

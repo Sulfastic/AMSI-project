@@ -22,6 +22,15 @@ class Vanguard extends PlayerCharacter {
         this.nameText.y=-50;
     }
 
+    addAnimations() {
+        this.animations.add('standingRight', [12], this.sp_curr / 20, true);
+        this.animations.add('standingLeft', [33], this.sp_curr / 20, true);
+        this.animations.add('right', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], this.sp_curr / 20, true);
+        this.animations.add('left', [21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32], this.sp_curr / 20, true);
+        this.animations.add('attack right', [12, 13, 14, 15, 16], 7 * this.masp_curr, true);
+        this.animations.add('attack left', [33, 34, 35, 36, 37], 7 * this.masp_curr, true);
+    }
+
 
     getStatsByLevel(level) {
         const hp = [300,400,500,600,700,800,900,1000,1100,1200];
