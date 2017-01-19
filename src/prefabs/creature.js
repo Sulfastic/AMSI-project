@@ -26,9 +26,6 @@ class Creature extends Phaser.Sprite {
         //enabling arcade physics for the creature
         this.game.physics.arcade.enable(this);
 
-        //setup audio
-        this.gunshot = this.game.add.audio('gunshot');
-
         //setting body physics
         this.game.physics.arcade.enableBody(this);
         this.body.bounce.y = this.game.global.BOUNCE;
@@ -42,31 +39,42 @@ class Creature extends Phaser.Sprite {
         this.animations.add('attack right', [11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 10 * this.masp_curr, false);
         this.animations.add('attack left', [30, 29, 28, 27, 26, 25, 24, 23, 22, 21], 10 * this.masp_curr, false);
 
+        //setup audio
+        this.gunshot = this.game.add.audio('gunshot');
+
         //flags
         this.facing = 1;//negative for facing left, positive for facing right
         this.busy = false;//flag for managing the actions of the creature, for example character is busy when it is making an attack
+        this.ableToCrossCrossablePlatform = false;
+        this.wantsToCrossCrossablePlatform = false;
 
         //adding text to display
-        this.nameText = this.addChild(new Phaser.Text(this.game, 0, -25, this.name, {
-            font: 'normal 15pt Arial',
-            fill: 'red'
-        }));
-        this.hpText = this.addChild(new Phaser.Text(this.game, 0, this.height, 'HP: ' + this.hp_curr + '/' + this.hp_max, {
-            font: 'normal 15pt Arial',
-            fill: 'red'
-        }));
+        this.hudTextStyle={
+            font: 'bold 15pt Arial',
+            fill: 'red',
+            backgroundColor: 'white'
+        };
+        this.nameText = this.addChild(new Phaser.Text(this.game, 0, -25, this.name, this.hudTextStyle));
+        this.hpText = this.addChild(new Phaser.Text(this.game, 0, this.height, 'HP: ' + this.hp_curr + '/' + this.hp_max, this.hudTextStyle));
     }
 
     update() {
         this.hpText.text = 'HP: ' + this.hp_curr + '/' + this.hp_max;
-        this.game.physics.arcade.collide(this, this.game.world.getByName('Platforms'));
+        this.game.physics.arcade.collide(this, this.game.world.getByName('Platforms').children[0]);
+        if(this.body.velocity.y<-5||this.wantsToCrossCrossablePlatform){
+            this.ableToCrossCrossablePlatform = true;
+        }
+        else{
+            this.ableToCrossCrossablePlatform = false;
+        }
+        if(!this.ableToCrossCrossablePlatform){
+            this.game.physics.arcade.collide(this, this.game.world.getByName('CrossablePlatforms').children[0]);
+        }
         this.game.physics.arcade.collide(this, this.game.world.getByName('Players'));
         this.game.physics.arcade.collide(this, this.game.world.getByName('Enemies'));
-        if(this.busy) this.stop();
-    }
-
-    shoot() {
-        this.gunshot.play();
+        if(this.busy) {
+            this.stop();
+        }
     }
 
     //moving methods
@@ -75,18 +83,24 @@ class Creature extends Phaser.Sprite {
         if (!this.busy) {
             this.body.velocity.x = -this.sp_curr;
             this.facing = -1;
-            this.animations.play('left');
+            this.animGoLeft();
         }
-        this.game.physics.arcade.collide(this, this.game.world.getByName('Platforms'));
+    }
+
+    animGoLeft(){
+        this.animations.play('left');
     }
 
     goRight() {
         if (!this.busy) {
             this.body.velocity.x = this.sp_curr;
             this.facing = 1;
-            this.animations.play('right');
+            this.animGoRight();
         }
-        this.game.physics.arcade.collide(this, this.game.world.getByName('Platforms'));
+    }
+
+    animGoRight(){
+        this.animations.play('right');
     }
 
     stop() {
@@ -94,32 +108,53 @@ class Creature extends Phaser.Sprite {
         this.game.physics.arcade.collide(this, this.game.world.getByName('Platforms'));
         if (!this.busy) {
             this.animations.stop();
-            if (this.facing > 0) this.frame = 0;
-            else this.frame = 41;
+            if (this.facing > 0) {
+                this.animStopRight();
+            }
+            else {
+                this.animStopLeft();
+            }
         }
     }
 
-    jump() {
-        if (this.body.touching.down) this.body.velocity.y = -this.sp_curr * 5;
+    animStopRight(){
+        this.frame = 0;
     }
 
+    animStopLeft(){
+        this.frame = 41;
+    }
+
+    jump() {
+        if (this.body.onFloor()) {
+            this.body.velocity.y = -this.sp_curr * 3;
+        }
+    }
 
     modifySpeed(amount) {
         this.sp_curr += amount;
-        if (this.sp_curr < 0) this.sp_curr = 0;
-        else if (this.sp_curr > this.sp_max) this.sp_curr = this.sp_max;
+        if (this.sp_curr < 0) {
+            this.sp_curr = 0;
+        }
+        else if (this.sp_curr > this.sp_max) {
+            this.sp_curr = this.sp_max;
+        }
     }
 
     //taking damage and healing capabilities, returning hp_curr
 
     damage(amount) {
         this.hp_curr -= amount;
-        if (this.hp_curr <= 0) this.kill();
+        if (this.hp_curr <= 0) {
+            this.kill();
+        }
     }
 
     heal(amount) {
         this.hp_curr += amount;
-        if (this.hp_curr > this.hp_max) this.hp_curr = this.hp_max;
+        if (this.hp_curr > this.hp_max) {
+            this.hp_curr = this.hp_max;
+        }
     }
 
 
@@ -127,35 +162,72 @@ class Creature extends Phaser.Sprite {
 
     modifyMeleeAttackStrength(amount) {
         this.mast_curr += amount;
-        if (this.mast_curr > this.mast_max) this.mast_curr = this.mast_max;
-        else if (this.mast_curr < 0) this.mast_curr = 0;
+        if (this.mast_curr > this.mast_max) {
+            this.mast_curr = this.mast_max;
+        }
+        else if (this.mast_curr < 0) {
+            this.mast_curr = 0;
+        }
     }
 
     modifyMeleeAttackSpeed(amount) {
         this.masp_curr += amount;
-        if (this.masp_curr > this.masp_max) this.masp_curr = this.masp_max;
-        else if (this.masp_curr < 0) this.masp_curr = 0;
+        if (this.masp_curr > this.masp_max) {
+            this.masp_curr = this.masp_max;
+        }
+        else if (this.masp_curr < 0) {
+            this.masp_curr = 0;
+        }
     }
 
     modifyMeleeAttackReach(amount) {
         this.ma_reach_curr += amount;
-        if (this.ma_reach_curr > this.ma_reach_max) this.ma_reach_curr = this.ma_reach_max;
-        else if (this.ma_reach_curr < 0) this.ma_reach_curr = 0;
+        if (this.ma_reach_curr > this.ma_reach_max) {
+            this.ma_reach_curr = this.ma_reach_max;
+        }
+        else if (this.ma_reach_curr < 0) {
+            this.ma_reach_curr = 0;
+        }
     }
 
     attackMelee() {
-        if (!this.busy && this.body.touching.down) {
+        if (!this.busy && this.body.onFloor()) {
             this.busy = true;
             this.body.velocity.x = 0;
             let timer = this.game.time.create();
             timer.add(1000 / this.masp_curr, this.notBusy, this);
+            timer.add(500/this.masp_curr, this.damageMelee, this);
             timer.start();
-            if (this.facing < 0) this.animations.play('attack left');
-            else this.animations.play('attack right');
-            let target = this.findMeleeTarget();
-            if (target != null) target.damage(this.mast_curr);
-            this.shoot();
+            if (this.facing < 0) {
+                this.animAttackMeleeLeft();
+            }
+            else {
+                this.animAttackMeleeRight();
+            }
+            this.playSoundAttackMelee();
         }
+    }
+
+    playSoundAttackMelee(){
+        this.gunshot.play();
+    }
+
+    animAttackMeleeLeft(){
+        this.animations.play('attack left');
+    }
+
+    animAttackMeleeRight(){
+        this.animations.play('attack right');
+    }
+
+    damageMelee(){
+        if(this.alive){
+            let target = this.findMeleeTarget();
+            if (target != null) {
+                target.damage(this.mast_curr);
+            }
+        }
+
     }
 
     notBusy() {
@@ -180,4 +252,4 @@ class Creature extends Phaser.Sprite {
     }
 }
 
-export default Creature;//comment this line for testing
+export default Creature;

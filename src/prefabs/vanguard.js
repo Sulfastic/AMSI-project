@@ -18,10 +18,7 @@ class Vanguard extends PlayerCharacter {
         //recording the level
         this.level = characterLevel;
         //displaying the class and level, moving the name higher
-        this.classText = this.addChild(new Phaser.Text(this.game, 0, -25, 'Vanguard, Level ' + this.level, {
-            font: 'normal 15pt Arial',
-            fill: 'blue'
-        }));
+        this.classText = this.addChild(new Phaser.Text(this.game, 0, -25, 'Vanguard, Level ' + this.level, this.hudTextStyle));
         this.nameText.y=-50;
     }
 
