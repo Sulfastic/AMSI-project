@@ -126,8 +126,10 @@ class Game extends Phaser.State {
     }
 
     spawnEnemies(){
+        var maxLvlEnemies = this.game.global.currentWaves+3;
+        var minLvlEnemies = this.game.global.currentWaves+1;
         for(let i=0;i<this.enemySpawnPointsCount;i++){
-            var level = Math.floor(Math.random() * ((this.game.global.currentWaves+2) - 1 + 1)) + 1;
+            var level = Math.floor(Math.random() * (maxLvlEnemies - minLvlEnemies + 1)) + minLvlEnemies;
             this.enemy = new Demon(this.game,this.enemySpawnPoints[i].x,this.enemySpawnPoints[i].y,'demon',4,'Demon',level);//Demon 1st level
             this.enemy.height=64;
             this.enemy.width = 64*147/165;
