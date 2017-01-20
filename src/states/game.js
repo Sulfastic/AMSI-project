@@ -103,8 +103,8 @@ class Game extends Phaser.State {
     update() {
         this.countdownText.setText( (this.endGameTimer.duration/1000).toFixed(1));
         if(this.enemies.countLiving()==0 && this.game.global.maxWaves != this.game.global.currentWaves){
-            this.spawnEnemies();
             this.game.global.currentWaves++;
+            this.spawnEnemies();
         }
 
         if(this.game.global.maxWaves == this.game.global.currentWaves){
@@ -127,12 +127,14 @@ class Game extends Phaser.State {
 
     spawnEnemies(){
         for(let i=0;i<this.enemySpawnPointsCount;i++){
-            this.enemy = new Demon(this.game,this.enemySpawnPoints[i].x,this.enemySpawnPoints[i].y,'demon',4,'Demon',1);//Demon 1st level
+            var level = Math.floor(Math.random() * ((this.game.global.currentWaves+2) - 1 + 1)) + 1;
+            this.enemy = new Demon(this.game,this.enemySpawnPoints[i].x,this.enemySpawnPoints[i].y,'demon',4,'Demon',level);//Demon 1st level
             this.enemy.height=64;
             this.enemy.width = 64*147/165;
             this.enemies.add(this.enemy);
         }
     }
+
 
 }
 
