@@ -46,20 +46,7 @@ class Game extends Phaser.State {
         //setup player and enemy spawn points based on spawn tiles
         this.playerSpawnPointLayer = this.map.createLayer('playerSpawnPoint');
         this.playerSpawnTile = this.map.searchTileIndex(10823,0,false,this.playerSpawnPointLayer);
-        this.playerSpawnPoint ={
-            x: this.playerSpawnTile.worldX,
-            y: this.playerSpawnTile.worldY
-        };
-        this.enemySpawnPointLayer = this.map.createLayer('enemiesSpawnPoints');
-        this.enemySpawnPoints = [];
-        this.enemySpawnTile = this.map.searchTileIndex(20595,0,false,this.enemySpawnPointLayer);
-        this.enemySpawnPointsCount=0;
-        while(this.enemySpawnTile!=null){
-            this.enemySpawnPoints.push({x: this.enemySpawnTile.worldX, y: this.enemySpawnTile.worldY});
-            this.enemySpawnPointsCount++;
-            this.enemySpawnTile = this.map.searchTileIndex(20595,this.enemySpawnPointsCount,false,this.enemySpawnPointLayer);
-        }
-
+        this.playerSpawnPoint ={x: this.playerSpawnTile.worldX, y: this.playerSpawnTile.worldY};
 
         //setup player
         this.players = this.game.add.group(this.game.world,'Players');
@@ -69,7 +56,12 @@ class Game extends Phaser.State {
         this.players.add(this.player);
         this.game.camera.follow(this.player);
 
+        this.enemySpawnPointLayers = [];
 
+        //Add spawnPoints
+        this.addSpawnPoints(this.enemySpawnPointLayers, 'enemiesSpawnPoints');
+        this.addSpawnPoints(this.enemySpawnPointLayers, 'enemiesSpawnPoints2');
+        this.addSpawnPoints(this.enemySpawnPointLayers, 'enemiesSpawnPoints3');
 
         //setup enemy group
         this.enemies = this.game.add.group(this.game.world,'Enemies');
@@ -94,22 +86,38 @@ class Game extends Phaser.State {
         this.game.global.score = 0;
 
         //Max Waves of enemies
-        this.game.global.maxWaves = 3;
+        this.game.global.maxWaves = 4;
         //Current Waves of enemies
-        this.game.global.currentWaves = -1;
+        this.game.global.currentWaves = 0;
+
+    }
+
+    addSpawnPoints(enemySpawnPointLayers, name){
+        var enemySpawnPointLayer = this.map.createLayer(name);
+        enemySpawnPointLayer.visible = false;
+        var enemySpawnPoints = [];
+        var enemySpawnTile = this.map.searchTileIndex(20595,0,false,enemySpawnPointLayer);
+        var enemySpawnPointsCount=0;
+        while(enemySpawnTile!=null){
+            enemySpawnPoints.push({x: enemySpawnTile.worldX, y: enemySpawnTile.worldY});
+            enemySpawnPointsCount++;
+            enemySpawnTile = this.map.searchTileIndex(20595,enemySpawnPointsCount,false,enemySpawnPointLayer);
+        }
+        enemySpawnPointLayers.push({spawnLayer: enemySpawnPointLayer, enemySpawnPoints: enemySpawnPoints});
 
     }
 
     update() {
         this.countdownText.setText( (this.endGameTimer.duration/1000).toFixed(1));
+
+        if(this.game.global.maxWaves == this.game.global.currentWaves){
+            time.add(Phaser.Timer.SECOND*3,this.winGame,this);
+            time.start();
+        }
+
         if(this.enemies.countLiving()==0 && this.game.global.maxWaves != this.game.global.currentWaves){
             this.game.global.currentWaves++;
             this.spawnEnemies();
-        }
-
-        if(this.game.global.maxWaves == this.game.global.currentWaves){
-            this.game.global.score = this.enemies.countDead();
-            this.game.state.start('win');
         }
 
         if(!this.player.exists&&!this.playerDying) {
@@ -120,17 +128,31 @@ class Game extends Phaser.State {
         }
     }
 
+    winGame() {
+        this.game.global.score = this.enemies.countDead();
+        this.game.state.start('win');
+    }
+
+
     endGame() {
         this.game.global.score = this.enemies.countDead();
         this.game.state.start('gameover');
     }
 
     spawnEnemies(){
-        var maxLvlEnemies = this.game.global.currentWaves+3;
-        var minLvlEnemies = this.game.global.currentWaves+1;
-        for(let i=0;i<this.enemySpawnPointsCount;i++){
+
+        var maxLvlEnemies = this.game.global.currentWaves+2;
+        var minLvlEnemies = this.game.global.currentWaves;
+        var spawnLayerLvl = (Math.floor(Math.random() * ((this.enemySpawnPointLayers.length-1) - 0 + 1)) + 0);
+
+        for(let i=0; i< this.enemySpawnPointLayers.length ; i++){
+            this.enemySpawnPointLayers[i].spawnLayer.visible = false;
+        }
+        this.enemySpawnPointLayers[spawnLayerLvl].spawnLayer.visible = true;
+
+        for(let i=0;i<this.enemySpawnPointLayers[spawnLayerLvl].enemySpawnPoints.length;i++){
             var level = Math.floor(Math.random() * (maxLvlEnemies - minLvlEnemies + 1)) + minLvlEnemies;
-            this.enemy = new Demon(this.game,this.enemySpawnPoints[i].x,this.enemySpawnPoints[i].y,'demon',4,'Demon',level);//Demon 1st level
+            this.enemy = new Demon(this.game,this.enemySpawnPointLayers[spawnLayerLvl].enemySpawnPoints[i].x,this.enemySpawnPointLayers[spawnLayerLvl].enemySpawnPoints[i].y,'demon',4,'Demon',level);//Demon 1st level
             this.enemy.height=64;
             this.enemy.width = 64*147/165;
             this.enemies.add(this.enemy);
