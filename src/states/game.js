@@ -92,11 +92,26 @@ class Game extends Phaser.State {
 
         //setup score
         this.game.global.score = 0;
+
+        //Max Waves of enemies
+        this.game.global.maxWaves = 3;
+        //Current Waves of enemies
+        this.game.global.currentWaves = -1;
+
     }
 
     update() {
         this.countdownText.setText( (this.endGameTimer.duration/1000).toFixed(1));
-        if(this.enemies.countLiving()==0) this.spawnEnemies();
+        if(this.enemies.countLiving()==0 && this.game.global.maxWaves != this.game.global.currentWaves){
+            this.spawnEnemies();
+            this.game.global.currentWaves++;
+        }
+
+        if(this.game.global.maxWaves == this.game.global.currentWaves){
+            this.game.global.score = this.enemies.countDead();
+            this.game.state.start('win');
+        }
+
         if(!this.player.exists&&!this.playerDying) {
             this.playerDying = true;
             let time = this.game.time.create();
