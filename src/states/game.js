@@ -94,11 +94,11 @@ class Game extends Phaser.State {
     }
 
     addSpawnPoints(enemySpawnPointLayers, name){
-        var enemySpawnPointLayer = this.map.createLayer(name);
+        let enemySpawnPointLayer = this.map.createLayer(name);
         enemySpawnPointLayer.visible = false;
-        var enemySpawnPoints = [];
-        var enemySpawnTile = this.map.searchTileIndex(20595,0,false,enemySpawnPointLayer);
-        var enemySpawnPointsCount=0;
+        let enemySpawnPoints = [];
+        let enemySpawnTile = this.map.searchTileIndex(20595,0,false,enemySpawnPointLayer);
+        let enemySpawnPointsCount=0;
         while(enemySpawnTile!=null){
             enemySpawnPoints.push({x: enemySpawnTile.worldX, y: enemySpawnTile.worldY});
             enemySpawnPointsCount++;
@@ -133,21 +133,28 @@ class Game extends Phaser.State {
     }
 
     winGame() {
+        this.resizeWorld();
         this.game.global.score = this.enemies.countDead();
         this.game.state.start('win');
     }
 
 
     endGame() {
+        this.resizeWorld();
         this.game.global.score = this.enemies.countDead();
         this.game.state.start('gameover');
+    }
+    
+    resizeWorld() {
+        this.game.world.width = window.innerWidth;
+        this.game.world.height = window.innerHeight;
     }
 
     spawnEnemies(){
 
-        var maxLvlEnemies = this.currentWaves+2;
-        var minLvlEnemies = this.currentWaves;
-        var spawnLayerLvl = Math.floor(Math.random() * ((this.enemySpawnPointLayers.length-1) + 1));
+        let maxLvlEnemies = this.currentWaves+2;
+        let minLvlEnemies = this.currentWaves;
+        let spawnLayerLvl = Math.floor(Math.random() * ((this.enemySpawnPointLayers.length-1) + 1));
 
         for(let i=0; i< this.enemySpawnPointLayers.length ; i++){
             this.enemySpawnPointLayers[i].spawnLayer.visible = false;
@@ -155,7 +162,7 @@ class Game extends Phaser.State {
         this.enemySpawnPointLayers[spawnLayerLvl].spawnLayer.visible = true;
 
         for(let i=0;i<this.enemySpawnPointLayers[spawnLayerLvl].enemySpawnPoints.length;i++){
-            var level = Math.floor(Math.random() * (maxLvlEnemies - minLvlEnemies + 1)) + minLvlEnemies;
+            let level = Math.floor(Math.random() * (maxLvlEnemies - minLvlEnemies + 1)) + minLvlEnemies;
             this.enemy = new Demon(this.game,this.enemySpawnPointLayers[spawnLayerLvl].enemySpawnPoints[i].x,this.enemySpawnPointLayers[spawnLayerLvl].enemySpawnPoints[i].y,'demon',4,'Demon',level);//Demon 1st level
             this.enemy.height=64;
             this.enemy.width = 64*147/165;
