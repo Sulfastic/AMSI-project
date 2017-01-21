@@ -43,37 +43,29 @@ class Game extends Phaser.State {
         //setup front tiles
         this.frontTiles = this.map.createLayer('frontTiles');
 
-        //setup player and enemy spawn points based on spawn tiles
+        //setup player spawn points based on spawn tiles
         this.playerSpawnPointLayer = this.map.createLayer('playerSpawnPoint');
         this.playerSpawnTile = this.map.searchTileIndex(10823,0,false,this.playerSpawnPointLayer);
-        this.playerSpawnPoint ={
-            x: this.playerSpawnTile.worldX,
-            y: this.playerSpawnTile.worldY
-        };
-        this.enemySpawnPointLayer = this.map.createLayer('enemiesSpawnPoints');
-        this.enemySpawnPoints = [];
-        this.enemySpawnTile = this.map.searchTileIndex(20595,0,false,this.enemySpawnPointLayer);
-        this.enemySpawnPointsCount=0;
-        while(this.enemySpawnTile!=null){
-            this.enemySpawnPoints.push({x: this.enemySpawnTile.worldX, y: this.enemySpawnTile.worldY});
-            this.enemySpawnPointsCount++;
-            this.enemySpawnTile = this.map.searchTileIndex(20595,this.enemySpawnPointsCount,false,this.enemySpawnPointLayer);
-        }
+        this.playerSpawnPoint ={x: this.playerSpawnTile.worldX, y: this.playerSpawnTile.worldY};
 
+
+        this.enemySpawnPointLayers = [];
+
+        //Add spawnPoints
+        this.addSpawnPoints(this.enemySpawnPointLayers, 'enemiesSpawnPoints');
+        this.addSpawnPoints(this.enemySpawnPointLayers, 'enemiesSpawnPoints2');
+        this.addSpawnPoints(this.enemySpawnPointLayers, 'enemiesSpawnPoints3');
 
         //setup player
         this.players = this.game.add.group(this.game.world,'Players');
-        this.player = new Vanguard(this.game,this.playerSpawnPoint.x,this.playerSpawnPoint.y,'knight',4,'Player',5);//Vanguard 5th level
+        this.player = new Vanguard(this.game,this.playerSpawnPoint.x,this.playerSpawnPoint.y,'knight',4,'Player',10);//Vanguard 10th level
         this.player.height=64;
         this.player.width = 64*147/165;
         this.players.add(this.player);
         this.game.camera.follow(this.player);
 
-
-
         //setup enemy group
         this.enemies = this.game.add.group(this.game.world,'Enemies');
-
 
         //setup UI
         this.countdownText = this.add.text(this.game.world.centerX, 0, '', {
@@ -87,37 +79,97 @@ class Game extends Phaser.State {
         this.endGameTimer.add(Phaser.Timer.SECOND * 180, this.endGame,this);
         this.endGameTimer.start();
 
-        //a flag when the player is dead
+        //a flag when the player is dead, or wins
         this.playerDying = false;
+        this.playerWins = false;
 
         //setup score
         this.game.global.score = 0;
+
+        //Max Waves of enemies
+        this.maxWaves = 3;
+        //Current Waves of enemies
+        this.currentWaves = 0;
+
+    }
+
+    addSpawnPoints(enemySpawnPointLayers, name){
+        let enemySpawnPointLayer = this.map.createLayer(name);
+        enemySpawnPointLayer.visible = false;
+        let enemySpawnPoints = [];
+        let enemySpawnTile = this.map.searchTileIndex(20595,0,false,enemySpawnPointLayer);
+        let enemySpawnPointsCount=0;
+        while(enemySpawnTile!=null){
+            enemySpawnPoints.push({x: enemySpawnTile.worldX, y: enemySpawnTile.worldY});
+            enemySpawnPointsCount++;
+            enemySpawnTile = this.map.searchTileIndex(20595,enemySpawnPointsCount,false,enemySpawnPointLayer);
+        }
+        enemySpawnPointLayers.push({spawnLayer: enemySpawnPointLayer, enemySpawnPoints: enemySpawnPoints});
+
     }
 
     update() {
         this.countdownText.setText( (this.endGameTimer.duration/1000).toFixed(1));
-        if(this.enemies.countLiving()==0) this.spawnEnemies();
-        if(!this.player.exists&&!this.playerDying) {
-            this.playerDying = true;
-            let time = this.game.time.create();
-            time.add(Phaser.Timer.SECOND*3,this.endGame,this);
-            time.start();
+
+        if(!this.playerWins&&!this.playerDying){
+            if(!this.player.exists) {
+                this.playerDying = true;
+                let time = this.game.time.create();
+                time.add(Phaser.Timer.SECOND*3,this.endGame,this);
+                time.start();
+            }
+            else if(this.enemies.countLiving()==0 && this.currentWaves == this.maxWaves){
+                let time = this.game.time.create();
+                time.add(Phaser.Timer.SECOND*3,this.winGame,this);
+                time.start();
+                this.playerWins=true;
+            }
+            else if(this.enemies.countLiving()==0){
+                this.currentWaves++;
+                this.spawnEnemies();
+            }
         }
+
     }
 
+    winGame() {
+        this.resizeWorld();
+        this.game.global.score = this.enemies.countDead();
+        this.game.state.start('win');
+    }
+
+
     endGame() {
+        this.resizeWorld();
         this.game.global.score = this.enemies.countDead();
         this.game.state.start('gameover');
     }
+    
+    resizeWorld() {
+        this.game.world.width = window.innerWidth;
+        this.game.world.height = window.innerHeight;
+    }
 
     spawnEnemies(){
-        for(let i=0;i<this.enemySpawnPointsCount;i++){
-            this.enemy = new Demon(this.game,this.enemySpawnPoints[i].x,this.enemySpawnPoints[i].y,'demon',4,'Demon',1);//Demon 1st level
+
+        let maxLvlEnemies = this.currentWaves+2;
+        let minLvlEnemies = this.currentWaves;
+        let spawnLayerLvl = Math.floor(Math.random() * ((this.enemySpawnPointLayers.length-1) + 1));
+
+        for(let i=0; i< this.enemySpawnPointLayers.length ; i++){
+            this.enemySpawnPointLayers[i].spawnLayer.visible = false;
+        }
+        this.enemySpawnPointLayers[spawnLayerLvl].spawnLayer.visible = true;
+
+        for(let i=0;i<this.enemySpawnPointLayers[spawnLayerLvl].enemySpawnPoints.length;i++){
+            let level = Math.floor(Math.random() * (maxLvlEnemies - minLvlEnemies + 1)) + minLvlEnemies;
+            this.enemy = new Demon(this.game,this.enemySpawnPointLayers[spawnLayerLvl].enemySpawnPoints[i].x,this.enemySpawnPointLayers[spawnLayerLvl].enemySpawnPoints[i].y,'demon',4,'Demon',level);//Demon 1st level
             this.enemy.height=64;
             this.enemy.width = 64*147/165;
             this.enemies.add(this.enemy);
         }
     }
+
 
 }
 

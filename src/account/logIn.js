@@ -98,6 +98,7 @@ class LogIn extends Phaser.State {
          };
 
          AJAX({
+
          method: "POST",
          url: "http://localhost:8080/users/login",
          contentType: 'application/json;charset=UTF-8',

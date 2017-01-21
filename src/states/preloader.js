@@ -25,7 +25,7 @@ class Preloader extends Phaser.State {
         this.game.load.image('buttonGreen','assets/button_green.png');
         this.game.load.image('buttonRed','assets/button_red.png');
         this.game.load.image('buttonYellow','assets/button_yellow.png');
-        this.game.load.tilemap('map1','assets/map/game_map_1.json',null,Phaser.Tilemap.TILED_JSON);
+        this.game.load.tilemap('map1','assets/map/game_map.json',null,Phaser.Tilemap.TILED_JSON);
         this.game.load.image('background','assets/map/tileds/background_forest.png');
         this.game.load.image('C1FG','assets/map/tileds/C1FG.png');
         this.game.load.image('C2FG','assets/map/tileds/C2FG.png');
