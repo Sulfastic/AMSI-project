@@ -33,8 +33,6 @@ class Menu extends Phaser.State {
 
     resetGlobalVariables(){
         this.game.global.score = 0;
-        this.game.global.maxWaves = 3;
-        this.game.global.currentWaves = -1;
     }
     update() {}
 
