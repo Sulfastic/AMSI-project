@@ -12,8 +12,7 @@ class Menu extends Phaser.State {
 
     this.buttonGreen = this.game.add.button(this.game.world.centerX -150, this.game.world.centerY -150,'buttonGreen', this.logIn, this);
     this.buttonRed = this.game.add.button(this.game.world.centerX -150,this.game.world.centerY,'buttonRed', this.quitGame, this);
-    this.buttonGreen.scale.setTo(3, 2);
-    this.buttonRed.scale.setTo(3, 2);
+
       //add intro text
 
     this.newGameText = this.add.text(this.buttonGreen.centerX,this.buttonGreen.centerY, 'Log In', {

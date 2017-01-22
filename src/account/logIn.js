@@ -19,16 +19,14 @@ class LogIn extends Phaser.State {
         this.buttonGreen = this.game.add.button(150, this.game.world.centerY -150,'buttonGreen', this.submit, this);
         this.buttonYellow = this.game.add.button(this.game.world.width - 425, this.game.world.centerY -150,'buttonYellow', this.register, this);
         this.buttonRed = this.game.add.button(150,this.game.world.centerY,'buttonRed', this.back, this);
-        this.buttonGreen.scale.setTo(3, 2);
-        this.buttonYellow.scale.setTo(4, 2);
-        this.buttonRed.scale.setTo(3, 2);
+
         //add intro text
         this.newGameText = this.add.text(this.buttonGreen.centerX,this.buttonGreen.centerY, 'Submit', {
             font: '42px Arial', fill: '#ffffff', align: 'center'
         });
 
         this.createAccountText = this.add.text(this.buttonYellow.centerX,this.buttonYellow.centerY, 'No account yet?\n Create!', {
-            font: '42px Arial', fill: '#000000', align: 'center'
+            font: '42px Arial', fill: '#ffffff', align: 'center'
         });
 
         this.quitText = this.add.text(this.buttonRed.centerX,this.buttonRed.centerY, 'Back', {
@@ -38,6 +36,7 @@ class LogIn extends Phaser.State {
         this.login = this.game.add.inputField(500, this.game.world.centerY - 150, {
             font: '65px Arial',
             fill: '#212121',
+            fillAlpha: 0.5,
             fontWeight: 'bold',
             height: 80,
             width: 500,
@@ -52,6 +51,7 @@ class LogIn extends Phaser.State {
         this.password = this.game.add.inputField(500, this.game.world.centerY, {
             font: '65px Arial',
             fill: '#212121',
+            fillAlpha: 0.5,
             fontWeight: 'bold',
             height: 80,
             width: 500,

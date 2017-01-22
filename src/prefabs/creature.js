@@ -45,6 +45,7 @@ class Creature extends Phaser.Sprite {
         //adding text to display
         this.hudTextStyle={
             font: 'bold 15pt Arial',
+            backgroundColor: null
             fill: 'red'
         };
         this.nameText = this.addChild(new Phaser.Text(this.game, 0, -25, this.name, this.hudTextStyle));

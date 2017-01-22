@@ -11,7 +11,8 @@ class PlayerCharacter extends Creature {
         //changing the color of the text displayed
         this.hudTextStyle={
             font: 'bold 15pt Arial',
-            fill: 'white'
+            fill: 'yellow',
+            backgroundColor: null
         };
         this.nameText.setStyle(this.hudTextStyle);
         this.hpText.setStyle(this.hudTextStyle);
