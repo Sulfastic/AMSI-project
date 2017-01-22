@@ -48,11 +48,10 @@ class Creature extends Phaser.Sprite {
         //adding text to display
         this.hudTextStyle={
             font: 'bold 15pt Arial',
-            fill: 'red',
-            backgroundColor: 'white'
+            fill: 'red'
         };
         this.nameText = this.addChild(new Phaser.Text(this.game, 0, -25, this.name, this.hudTextStyle));
-        this.hpText = this.addChild(new Phaser.Text(this.game, 0, this.height, 'HP: ' + this.hp_curr + '/' + this.hp_max, this.hudTextStyle));
+        this.hpText = this.addChild(new Phaser.Text(this.game, 0, this.height+25, 'HP: ' + this.hp_curr + '/' + this.hp_max, this.hudTextStyle));
     }
 
     addAnimations() {
@@ -89,7 +88,7 @@ class Creature extends Phaser.Sprite {
     }
 
     animGoLeft(){
-        this.animations.play('left');
+        this.animations.play('goLeft');
     }
 
     goRight() {
@@ -101,7 +100,7 @@ class Creature extends Phaser.Sprite {
     }
 
     animGoRight(){
-        this.animations.play('right');
+        this.animations.play('goRight');
     }
 
     stop() {
@@ -109,12 +108,20 @@ class Creature extends Phaser.Sprite {
         this.game.physics.arcade.collide(this, this.game.world.getByName('Platforms'));
         if (!this.busy) {
             if (this.facing > 0) {
-                this.animations.play('standingRight');
+                this.animStandRight();
             }
             else {
-                this.animations.play('standingLeft');
+                this.animStandLeft();
             }
         }
+    }
+
+    animStandRight(){
+        this.animations.play('standRight');
+    }
+
+    animStandLeft(){
+        this.animations.play('standLeft');
     }
 
     jump() {
@@ -205,11 +212,11 @@ class Creature extends Phaser.Sprite {
     }
 
     animAttackMeleeLeft(){
-        this.animations.play('attack left');
+        this.animations.play('attackLeft');
     }
 
     animAttackMeleeRight(){
-        this.animations.play('attack right');
+        this.animations.play('attackRight');
     }
 
     damageMelee(){

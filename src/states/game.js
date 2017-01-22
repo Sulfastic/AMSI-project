@@ -58,26 +58,12 @@ class Game extends Phaser.State {
 
         //setup player
         this.players = this.game.add.group(this.game.world,'Players');
-        this.player = new Vanguard(this.game,this.playerSpawnPoint.x,this.playerSpawnPoint.y,'knight',4,'Player',10);//Vanguard 10th level
-        this.player.height=64;
-        this.player.width = 64*147/165;
+        this.player = new Vanguard(this.game,this.playerSpawnPoint.x,this.playerSpawnPoint.y,'Player',10);//Vanguard 10th level
         this.players.add(this.player);
         this.game.camera.follow(this.player);
 
         //setup enemy group
         this.enemies = this.game.add.group(this.game.world,'Enemies');
-
-        //setup UI
-        this.countdownText = this.add.text(this.game.world.centerX, 0, '', {
-            font: '40px Arial', fill: '#ffffff', align: 'center'
-        });
-        this.countdownText.anchor.set(0.5,0);
-        this.countdownText.fixedToCamera = true;
-
-        //setup a timer to end the game
-        this.endGameTimer = this.game.time.create();
-        this.endGameTimer.add(Phaser.Timer.SECOND * 180, this.endGame,this);
-        this.endGameTimer.start();
 
         //a flag when the player is dead, or wins
         this.playerDying = false;
@@ -109,8 +95,6 @@ class Game extends Phaser.State {
     }
 
     update() {
-        this.countdownText.setText( (this.endGameTimer.duration/1000).toFixed(1));
-
         if(!this.playerWins&&!this.playerDying){
             if(!this.player.exists) {
                 this.playerDying = true;
@@ -163,9 +147,7 @@ class Game extends Phaser.State {
 
         for(let i=0;i<this.enemySpawnPointLayers[spawnLayerLvl].enemySpawnPoints.length;i++){
             let level = Math.floor(Math.random() * (maxLvlEnemies - minLvlEnemies + 1)) + minLvlEnemies;
-            this.enemy = new Demon(this.game,this.enemySpawnPointLayers[spawnLayerLvl].enemySpawnPoints[i].x,this.enemySpawnPointLayers[spawnLayerLvl].enemySpawnPoints[i].y,'demon',4,'Demon',level);//Demon 1st level
-            this.enemy.height=64;
-            this.enemy.width = 64*147/165;
+            this.enemy = new Demon(this.game,this.enemySpawnPointLayers[spawnLayerLvl].enemySpawnPoints[i].x,this.enemySpawnPointLayers[spawnLayerLvl].enemySpawnPoints[i].y,'Demon',level);
             this.enemies.add(this.enemy);
         }
     }

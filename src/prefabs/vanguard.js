@@ -6,8 +6,8 @@ import PlayerCharacter from './player-character';
 class Vanguard extends PlayerCharacter {
 
     //constructor
-    constructor(game, x, y, spritesheet, frame, game_level_name, characterLevel) {
-        super(game, x, y, spritesheet, frame,
+    constructor(game, x, y, game_level_name, characterLevel) {
+        super(game, x, y, 'vanguard', 4,
             Vanguard.prototype.getStatsByLevel(characterLevel).hp,
             Vanguard.prototype.getStatsByLevel(characterLevel).speed,
             game_level_name,
@@ -23,12 +23,14 @@ class Vanguard extends PlayerCharacter {
     }
 
     addAnimations() {
-        this.animations.add('standingRight', [12], this.sp_curr / 20, true);
-        this.animations.add('standingLeft', [33], this.sp_curr / 20, true);
-        this.animations.add('right', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], this.sp_curr / 20, true);
-        this.animations.add('left', [21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32], this.sp_curr / 20, true);
-        this.animations.add('attack right', [12, 13, 14, 15, 16], 7 * this.masp_curr, true);
-        this.animations.add('attack left', [33, 34, 35, 36, 37], 7 * this.masp_curr, true);
+        this.animations.add('standRight', [12], this.sp_curr / 10, true);
+        this.animations.add('standLeft', [33], this.sp_curr / 10, true);
+        this.animations.add('goRight', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], this.sp_curr / 7, true);
+        this.animations.add('goLeft', [21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32], this.sp_curr / 7, true);
+        this.animations.add('attackRight', [12, 13, 14, 15, 16, 17, 18, 19, 20], 9 * this.masp_curr, true);
+        this.animations.add('attackLeft', [33, 34, 35, 36, 37, 38, 39, 40, 41], 9 * this.masp_curr, true);
+        this.height = 64;
+        this.width = 64*147/165;
     }
 
 

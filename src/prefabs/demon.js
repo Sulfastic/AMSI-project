@@ -6,8 +6,8 @@ import Enemy from './enemy';
 class Demon extends Enemy {
 
     //constructor
-    constructor(game, x, y, spritesheet, frame, game_level_name, enemyLevel) {
-        super(game, x, y, spritesheet, frame,
+    constructor(game, x, y, game_level_name, enemyLevel) {
+        super(game, x, y, 'demon', 4,
             Demon.prototype.getStatsByLevel(enemyLevel).hp,
             Demon.prototype.getStatsByLevel(enemyLevel).speed,
             game_level_name,
@@ -41,21 +41,34 @@ class Demon extends Enemy {
     addAnimations() {
         let right = [];
         let left = [];
+        let atright = [];
+        let atleft = [];
 
-        for(let i = 0; i < 46; i++) {
+        for(let i = 0; i < 36; i++) {
             right.push(i);
         }
 
-        for(let i = 84; i < 130; i++) {
+        for(let i = 129; i > 93; i--) {
             left.push(i);
         }
 
-        this.animations.add('standingRight', [52], this.sp_curr / 20, true);
-        this.animations.add('standingLeft', [65], this.sp_curr / 20, true);
-        this.animations.add('right', right, this.sp_curr, true);
-        this.animations.add('left', left, this.sp_curr, true);
-        this.animations.add('attack right', [47, 48, 49, 50, 51], 9 * this.masp_curr, false);
-        this.animations.add('attack left', [79, 80, 81, 82, 83], 9 * this.masp_curr, false);
+        for(let i=36;i<65;i++){
+            atright.push(i);
+        }
+
+        for(let i=93;i>64;i--){
+            atleft.push(i);
+        }
+
+        this.animations.add('standRight', [64], this.sp_curr / 20, true);
+        this.animations.add('standLeft', [65], this.sp_curr / 20, true);
+        this.animations.add('goRight', right, this.sp_curr, true);
+        this.animations.add('goLeft', left, this.sp_curr, true);
+        this.animations.add('attackRight', atright, 29 * this.masp_curr, false);
+        this.animations.add('attackLeft', atleft, 29 * this.masp_curr, false);
+
+        this.height = 64;
+        this.width = 64*147/165;
     }
 
     AI(){

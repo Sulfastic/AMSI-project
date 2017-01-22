@@ -4,10 +4,10 @@ class Preloader extends Phaser.State {
         super();
         this.asset = null;
         this.ready = false;
-        this.knightFrameWidth = 97;
-        this.knightFrameHeight = 85;
-        this.demonWidth = 77;
-        this.demonHeight = 90;
+        this.vanguardFrameWidth = 97;
+        this.vanguardFrameHeight = 85;
+        this.demonFrameWidth = 77;
+        this.demonFrameHeight = 90;
     }
 
     preload() {
@@ -38,8 +38,8 @@ class Preloader extends Phaser.State {
         this.game.load.image('ladder','assets/map/tileds/ladder.png');
         this.game.load.image('spawnpoint','assets/map/tileds/spawnpoint.png');
 
-        this.game.load.spritesheet('knight','assets/vanguard.png',this.knightFrameWidth,this.knightFrameHeight);
-        this.game.load.spritesheet('demon','assets/demon.png',this.demonWidth,this.demonHeight);
+        this.game.load.spritesheet('vanguard','assets/vanguard.png',this.vanguardFrameWidth,this.vanguardFrameHeight);
+        this.game.load.spritesheet('demon','assets/demon.png',this.demonFrameWidth,this.demonFrameHeight);
 
         this.game.load.audio('gunshot','assets/gunshot.wav');
         this.game.load.audio('ding','assets/ding.wav');
