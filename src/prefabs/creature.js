@@ -36,9 +36,6 @@ class Creature extends Phaser.Sprite {
         //adding animations for walking with standard spritesheet, 10 frames per second, 'true' for looped animation
         this.addAnimations();
 
-        //setup audio
-        this.gunshot = this.game.add.audio('gunshot');
-
         //flags
         this.facing = 1;//negative for facing left, positive for facing right
         this.busy = false;//flag for managing the actions of the creature, for example character is busy when it is making an attack
@@ -146,6 +143,9 @@ class Creature extends Phaser.Sprite {
         this.hp_curr -= amount;
         if (this.hp_curr <= 0) {
             this.kill();
+            this.playSoundDeath();
+        } else {
+            this.playSoundGetHit();
         }
     }
 
@@ -208,7 +208,15 @@ class Creature extends Phaser.Sprite {
     }
 
     playSoundAttackMelee(){
-        this.gunshot.play();
+        throw new Error("should be overriden");
+    }
+
+    playSoundDeath(){
+        throw new Error("should be overriden");
+    }
+
+    playSoundGetHit(){
+        this.game.add.audio('collision'+Math.ceil(Math.random()*11)).play();
     }
 
     animAttackMeleeLeft(){

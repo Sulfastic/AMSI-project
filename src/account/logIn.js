@@ -111,6 +111,7 @@ class LogIn extends Phaser.State {
          this.password = this.game.add.inputField(500, this.game.world.centerY, this.markError(Fabrique.InputType.password, "Password"));
          }.bind(this)
          });
+        this.game.add.audio('login').play();
     }
 
     register() {

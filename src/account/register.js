@@ -119,6 +119,8 @@ class Register extends Phaser.State {
                 this.password = this.game.add.inputField(500, this.game.world.centerY + 150, this.markError(Fabrique.InputType.password, "Password"));
             }.bind(this)
         });
+
+        this.game.add.audio('newAccount').play();
     }
 }
 

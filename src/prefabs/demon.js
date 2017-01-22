@@ -164,6 +164,23 @@ class Demon extends Enemy {
         const mareach = [20,25,30,35,40,45,50,55,60,65];//melee attack reach in pixels
         return {hp: hp[level-1], speed: speed[level-1], mast: mast[level-1], masp: masp[level-1], mareach: mareach[level-1]};
     }
+
+    playSoundAttackMelee(){
+        if(Math.random()<0.3)
+            this.game.add.audio('deamonHit'+Math.ceil(Math.random()*4)).play();
+
+        this.game.add.audio('hit'+Math.ceil(Math.random()*5)).play();
+    }
+
+    playSoundDeath(){
+        this.game.add.audio('deamonDeath'+Math.ceil(Math.random()*6)).play();
+    }
+
+    playSoundGetHit(){
+        super.playSoundGetHit();
+        if(Math.random()<0.3)
+            this.game.add.audio('deamonGethit'+Math.ceil(Math.random()*10)).play();
+    }
 }
 
 export default Demon;

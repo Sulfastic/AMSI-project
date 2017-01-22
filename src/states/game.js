@@ -119,6 +119,7 @@ class Game extends Phaser.State {
     winGame() {
         this.resizeWorld();
         this.game.global.score = this.enemies.countDead();
+        this.game.add.audio('gameOver').play();
         this.game.state.start('win');
     }
 
@@ -126,6 +127,7 @@ class Game extends Phaser.State {
     endGame() {
         this.resizeWorld();
         this.game.global.score = this.enemies.countDead();
+        this.game.add.audio('gameOver').play();
         this.game.state.start('gameover');
     }
     
@@ -150,6 +152,7 @@ class Game extends Phaser.State {
             this.enemy = new Demon(this.game,this.enemySpawnPointLayers[spawnLayerLvl].enemySpawnPoints[i].x,this.enemySpawnPointLayers[spawnLayerLvl].enemySpawnPoints[i].y,'Demon',level);
             this.enemies.add(this.enemy);
         }
+        this.game.add.audio('newWave').play();
     }
 
 

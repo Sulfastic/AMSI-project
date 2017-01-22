@@ -41,8 +41,51 @@ class Preloader extends Phaser.State {
         this.game.load.spritesheet('vanguard','assets/vanguard.png',this.vanguardFrameWidth,this.vanguardFrameHeight);
         this.game.load.spritesheet('demon','assets/demon.png',this.demonFrameWidth,this.demonFrameHeight);
 
-        this.game.load.audio('gunshot','assets/gunshot.wav');
+        //load audio
         this.game.load.audio('ding','assets/ding.wav');
+        this.game.load.audio('login','assets/sounds/sounds/login.wav');
+        this.game.load.audio('newAccount','assets/sounds/sounds/new_account.wav');
+        this.game.load.audio('gameStart','assets/sounds/sounds/game_start.wav');
+        this.game.load.audio('gameOver','assets/sounds/sounds/game_over.wav');
+        this.game.load.audio('newGame','assets/sounds/sounds/new_game.wav');
+        this.game.load.audio('newWave','assets/sounds/sounds/new_wave.wav');
+
+        var ddeathPath = 'assets/sounds/demon/deaths/die';
+        var dgethitPath = 'assets/sounds/demon/gethits/gethit';
+        var dhitPath = 'assets/sounds/demon/hits/hit';
+        var vdeathPath = 'assets/sounds/vanguard/die/die';
+        var vgethitPath = 'assets/sounds/vanguard/gethits/gethit';
+        var vhitPath = 'assets/sounds/vanguard/hits/hit';
+        var collisionPath = 'assets/sounds/physics/collisions/collision';
+        var hitPath = 'assets/sounds/physics/hits/hit';
+        var slashPath = 'assets/sounds/physics/slashes/slash';
+
+        var i;
+        for(i=1;i<=6;i++){
+            this.game.load.audio("deamonDeath"+i,ddeathPath+'_'+i+'.wav');
+        }
+        for(i=1;i<=10;i++){
+            this.game.load.audio("deamonGethit"+i,dgethitPath+'_'+i+'.wav');
+        }
+        for(i=1;i<=4;i++){
+            this.game.load.audio("deamonHit"+i,dhitPath+'_'+i+'.wav');
+        }
+        this.game.load.audio("vanguardDeath",vdeathPath+'.wav');
+        for(i=1;i<=10;i++){
+            this.game.load.audio("vanguardGethit"+i,vgethitPath+'_'+i+'.wav');
+        }
+        for(i=1;i<=5;i++){
+            this.game.load.audio("vanguardHit"+i,vhitPath+'_'+i+'.wav');
+        }
+        for(i=1;i<=11;i++){
+            this.game.load.audio("collision"+i,collisionPath+'_'+i+'.wav');
+        }
+        for(i=1;i<=5;i++){
+            this.game.load.audio("hit"+i,hitPath+'_'+i+'.wav');
+        }
+        for(i=1;i<=8;i++){
+            this.game.load.audio("slash"+i,slashPath+'_'+i+'.wav');
+        }
     }
 
     onLoadComplete() {

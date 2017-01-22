@@ -42,6 +42,23 @@ class Vanguard extends PlayerCharacter {
         const mareach = [40,45,50,55,60,65,70,75,80,85];//melee attack reach in pixels
         return {hp: hp[level-1], speed: speed[level-1], mast: mast[level-1], masp: masp[level-1], mareach: mareach[level-1]};
     }
+
+    playSoundAttackMelee(){
+        if(Math.random()<0.3)
+            this.game.add.audio('vanguardHit'+Math.ceil(Math.random()*5)).play();
+
+        this.game.add.audio('slash'+Math.ceil(Math.random()*8)).play();
+    }
+
+    playSoundDeath(){
+        this.game.add.audio('vanguardDeath').play();
+    }
+
+    playSoundGetHit(){
+        super.playSoundGetHit();
+        if(Math.random()<0.3)
+            this.game.add.audio('vanguardGethit'+Math.ceil(Math.random()*10)).play();
+    }
 }
 
 export default Vanguard;

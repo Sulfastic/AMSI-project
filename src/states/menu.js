@@ -37,6 +37,7 @@ class Menu extends Phaser.State {
   }
 
   logIn () {
+      this.game.add.audio('newGame').play();
       this.game.state.start('logIn');
   }
 
