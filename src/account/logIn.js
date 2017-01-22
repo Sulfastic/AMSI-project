@@ -16,6 +16,18 @@ class LogIn extends Phaser.State {
         this.background.height = this.game.world.height;
         this.background.width = this.game.world.width;
 
+        //add game header
+        this.gameHeaderText = this.add.text(this.game.world.centerX,this.game.world.height/6, "FAMILY BUSINESS", {
+            font: 'bold 72px Arial', fill: '#ffffff', align: 'center'
+        });
+        this.gameHeaderText.anchor.set(0.5);
+
+        //add screen header
+        this.headerText = this.add.text(this.game.world.centerX,2*this.game.world.height/8, "Log In", {
+            font: '42px Arial', fill: '#ffffff', align: 'center'
+        });
+        this.headerText.anchor.set(0.5);
+
         this.buttonGreen = this.game.add.button(150, this.game.world.centerY -150,'buttonGreen', this.submit, this);
         this.buttonYellow = this.game.add.button(this.game.world.width - 425, this.game.world.centerY -150,'buttonYellow', this.register, this);
         this.buttonRed = this.game.add.button(150,this.game.world.centerY,'buttonRed', this.back, this);

@@ -10,8 +10,20 @@ class Menu extends Phaser.State {
     this.background.height = this.game.world.height;
     this.background.width = this.game.world.width;
 
+    //add game header
+    this.gameHeaderText = this.add.text(this.game.world.centerX,this.game.world.height/6, "FAMILY BUSINESS", {
+        font: 'bold 72px Arial', fill: '#ffffff', align: 'center'
+    });
+    this.gameHeaderText.anchor.set(0.5);
+
+    //add screen header
+    this.headerText = this.add.text(this.game.world.centerX,3*this.game.world.height/8, "Game Over", {
+        font: '42px Arial', fill: '#ffffff', align: 'center'
+    });
+    this.headerText.anchor.set(0.5);
+
     //add intro text
-    this.gameoverText = this.add.text(this.game.world.centerX,this.game.world.centerY, "Score = "+this.game.global.score, {
+    this.gameoverText = this.add.text(this.game.world.centerX,this.game.world.centerY, "Score: "+this.game.global.score, {
       font: '42px Arial', fill: '#ffffff', align: 'center'
     });
     this.gameoverText.anchor.set(0.5);

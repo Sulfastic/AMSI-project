@@ -12,6 +12,12 @@ class Boot extends Phaser.State {
     this.game.add.plugin(Fabrique.Plugins.InputField);
     this.game.input.maxPointers = 1;
 
+    //add game header
+    this.gameHeaderText = this.add.text(this.game.world.centerX,this.game.world.height/6, "FAMILY BUSINESS", {
+        font: 'bold 72px Arial', fill: '#ffffff', align: 'center'
+    });
+    this.gameHeaderText.anchor.set(0.5);
+
     //setup device scaling
     if (this.game.device.desktop) {
       this.game.scale.pageAlignHorizontally = true;

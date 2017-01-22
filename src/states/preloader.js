@@ -15,6 +15,18 @@ class Preloader extends Phaser.State {
         this.asset = this.add.sprite(this.game.width * 0.5 - 110, this.game.height * 0.5 - 10, 'preloader');
         this.load.setPreloadSprite(this.asset);
 
+        //add game header
+        this.gameHeaderText = this.add.text(this.game.world.centerX,this.game.world.height/6, "FAMILY BUSINESS", {
+            font: 'bold 72px Arial', fill: '#ffffff', align: 'center'
+        });
+        this.gameHeaderText.anchor.set(0.5);
+
+        //add screen header
+        this.headerText = this.add.text(this.game.world.centerX,2*this.game.world.height/8, "Loading...", {
+            font: '42px Arial', fill: '#ffffff', align: 'center'
+        });
+        this.headerText.anchor.set(0.5);
+
         //Setup loading and its events
         this.load.onLoadComplete.addOnce(this.onLoadComplete, this);
         this.loadResources();

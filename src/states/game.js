@@ -58,7 +58,7 @@ class Game extends Phaser.State {
 
         //setup player
         this.players = this.game.add.group(this.game.world,'Players');
-        this.player = new Vanguard(this.game,this.playerSpawnPoint.x,this.playerSpawnPoint.y,'Player',10);//Vanguard 10th level
+        this.player = new Vanguard(this.game,this.playerSpawnPoint.x,this.playerSpawnPoint.y,'Player',5);
         this.players.add(this.player);
         this.game.camera.follow(this.player);
 
@@ -119,7 +119,7 @@ class Game extends Phaser.State {
     winGame() {
         this.resizeWorld();
         this.game.global.score = this.enemies.countDead();
-        this.game.add.audio('gameOver').play();
+        this.game.add.audio('gameStart').play();
         this.game.state.start('win');
     }
 

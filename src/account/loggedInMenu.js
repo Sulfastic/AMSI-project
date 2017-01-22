@@ -10,6 +10,18 @@ class LoggedInMenu extends Phaser.State {
         this.background.height = this.game.world.height;
         this.background.width = this.game.world.width;
 
+        //add game header
+        this.gameHeaderText = this.add.text(this.game.world.centerX,this.game.world.height/6, "FAMILY BUSINESS", {
+            font: 'bold 72px Arial', fill: '#ffffff', align: 'center'
+        });
+        this.gameHeaderText.anchor.set(0.5);
+
+        //add screen header
+        this.headerText = this.add.text(this.game.world.centerX,2*this.game.world.height/8, "Main Menu", {
+            font: '42px Arial', fill: '#ffffff', align: 'center'
+        });
+        this.headerText.anchor.set(0.5);
+
         this.buttonGreen = this.game.add.button(this.game.world.centerX -150, this.game.world.centerY -150,'buttonGreen', this.newGame, this);
         this.buttonGreen2 = this.game.add.button(this.game.world.centerX -150, this.game.world.centerY,'buttonGreen', this.options, this);
         this.buttonRed = this.game.add.button(this.game.world.centerX -150,this.game.world.centerY + 150,'buttonRed', this.quitGame, this);
