@@ -54,6 +54,8 @@ class LoggedInMenu extends Phaser.State {
 
     newGame () {
         this.game.add.audio('gameStart').play();
+        this.game.menuTheme.stop();
+        this.game.gameTheme.play();
         this.game.state.start('game');
     }
 

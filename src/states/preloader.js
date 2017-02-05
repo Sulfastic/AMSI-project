@@ -98,9 +98,15 @@ class Preloader extends Phaser.State {
         for(i=1;i<=8;i++){
             this.game.load.audio("slash"+i,slashPath+'_'+i+'.wav');
         }
+        this.game.load.audio("menuTheme", 'assets/sounds/music/menu.wav');
+        this.game.load.audio("gameTheme", 'assets/sounds/music/game.wav');
     }
 
     onLoadComplete() {
+        this.game.menuTheme = this.game.add.audio("menuTheme");
+        this.game.gameTheme = this.game.add.audio("gameTheme");
+
+        this.game.menuTheme.play();
         this.game.state.start('menu');
     }
 }

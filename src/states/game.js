@@ -95,6 +95,9 @@ class Game extends Phaser.State {
     }
 
     update() {
+        if(!this.game.gameTheme.isPlaying)
+            this.game.gameTheme.play();
+
         if(!this.playerWins&&!this.playerDying){
             if(!this.player.exists) {
                 this.playerDying = true;
@@ -119,7 +122,9 @@ class Game extends Phaser.State {
     winGame() {
         this.resizeWorld();
         this.game.global.score = this.enemies.countDead();
-        this.game.add.audio('gameStart').play();
+        this.game.add.audio('gameOver').play();
+        this.game.gameTheme.stop();
+        this.game.menuTheme.play();
         this.game.state.start('win');
     }
 
@@ -128,6 +133,8 @@ class Game extends Phaser.State {
         this.resizeWorld();
         this.game.global.score = this.enemies.countDead();
         this.game.add.audio('gameOver').play();
+        this.game.gameTheme.stop();
+        this.game.menuTheme.play();
         this.game.state.start('gameover');
     }
     
